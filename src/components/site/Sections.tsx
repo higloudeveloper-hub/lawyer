@@ -11,6 +11,7 @@ import {
   UserRound,
   UserRoundCheck,
 } from "lucide-react";
+import { Counter, Reveal } from "./Reveal";
 
 const strip = [
   { icon: ShieldCheck, lines: ["Sin riesgos", "Sin compromisos"] },
@@ -28,9 +29,11 @@ export function TrustStrip() {
           Conecta. Ayuda. Haz crecer tu práctica.
         </p>
         <ul className="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5 lg:divide-x lg:divide-brand-foreground/15">
-          {strip.map(({ icon: Icon, lines }) => (
-            <li
+          {strip.map(({ icon: Icon, lines }, i) => (
+            <Reveal
+              as="li"
               key={lines.join()}
+              delay={i * 90}
               className="flex items-center justify-center gap-3 px-2 text-center lg:text-left"
             >
               <Icon className="h-6 w-6 shrink-0 text-brand-foreground/70" strokeWidth={1.5} />
@@ -39,7 +42,7 @@ export function TrustStrip() {
                 <br />
                 {lines[1]}
               </span>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </div>
@@ -73,7 +76,7 @@ export function Benefits() {
     <section id="beneficios" className="bg-surface py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,2.4fr)]">
-          <div>
+          <Reveal>
             <h2 className="text-display text-3xl leading-tight text-foreground sm:text-4xl">
               Más clientes.
               <br />
@@ -83,22 +86,24 @@ export function Benefits() {
               Únete a una plataforma diseñada para que abogados como tú conecten con más personas y
               hagan crecer su práctica.
             </p>
-          </div>
+          </Reveal>
           <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            {benefits.map(({ icon: Icon, title, text }) => (
-              <li
+            {benefits.map(({ icon: Icon, title, text }, i) => (
+              <Reveal
+                as="li"
                 key={title}
-                className="rounded border border-border bg-card p-6 text-center transition-shadow hover:shadow-panel"
+                delay={i * 110}
+                className="rounded border border-border bg-card p-6 text-center hover:shadow-panel"
               >
                 <Icon className="mx-auto h-8 w-8 text-foreground" strokeWidth={1.5} />
                 <h3 className="mt-4 text-display text-sm text-brand">{title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
-              </li>
+              </Reveal>
             ))}
           </ul>
         </div>
 
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 border-t border-border pt-8">
+        <Reveal className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 border-t border-border pt-8">
           <span className="text-display text-[0.6rem] tracking-[0.2em] text-muted-foreground">
             Con la confianza de
           </span>
@@ -107,7 +112,7 @@ export function Benefits() {
               {p}
             </span>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -136,19 +141,25 @@ export function HowItWorks() {
     <section id="como-funciona" className="bg-gradient-ink py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <p className="text-display text-xs tracking-[0.3em] text-brand">Cómo funciona</p>
-        <h2 className="mt-3 max-w-xl text-display text-3xl leading-tight text-brand-foreground sm:text-4xl">
-          Tres pasos para tu próximo caso
-        </h2>
+        <Reveal>
+          <h2 className="max-w-xl text-display text-3xl leading-tight text-brand-foreground sm:text-4xl">
+            Tres pasos para tu próximo caso
+          </h2>
+        </Reveal>
         <ol className="mt-12 grid gap-6 md:grid-cols-3">
-          {steps.map((s) => (
-            <li
+          {steps.map((s, i) => (
+            <Reveal
+              as="li"
               key={s.n}
+              delay={i * 130}
               className="relative rounded border border-brand-foreground/12 bg-brand-foreground/[0.04] p-7"
             >
-              <span className="text-display text-4xl text-brand/70">{s.n}</span>
+              <span className="text-display text-4xl text-brand/70">
+                <Counter value={Number(s.n)} duration={900} pad={2} />
+              </span>
               <h3 className="mt-4 text-display text-base text-brand-foreground">{s.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-brand-foreground/70">{s.text}</p>
-            </li>
+            </Reveal>
           ))}
         </ol>
 
@@ -157,14 +168,16 @@ export function HowItWorks() {
             { icon: LaptopMinimal, t: "Panel inteligente", d: "Filtra casos por estado, idioma y tipo de trámite." },
             { icon: FileCheck2, t: "Casos verificados", d: "Validamos cada solicitud antes de mostrarla." },
             { icon: Handshake, t: "Soporte dedicado", d: "Un equipo en español acompaña tu operación 24/7." },
-          ].map(({ icon: Icon, t, d }) => (
-            <div key={t} id={t === "Soporte dedicado" ? "soporte" : undefined} className="flex gap-4">
+          ].map(({ icon: Icon, t, d }, i) => (
+            <Reveal key={t} delay={i * 110} className="flex gap-4">
+              <span id={t === "Soporte dedicado" ? "soporte" : undefined} className="contents">
               <Icon className="h-6 w-6 shrink-0 text-brand" strokeWidth={1.5} />
               <div className="min-w-0">
                 <h3 className="text-display text-sm text-brand-foreground">{t}</h3>
                 <p className="mt-1 text-sm text-brand-foreground/65">{d}</p>
               </div>
-            </div>
+              </span>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -203,16 +216,17 @@ export function Pricing() {
   return (
     <section id="precios" className="bg-background py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="max-w-xl">
+        <Reveal className="max-w-xl">
           <p className="text-display text-xs tracking-[0.3em] text-brand">Precios</p>
           <h2 className="mt-3 text-display text-3xl leading-tight text-foreground sm:text-4xl">
             Paga solo por los casos que aceptas
           </h2>
-        </div>
+        </Reveal>
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {plans.map((p) => (
-            <div
+          {plans.map((p, i) => (
+            <Reveal
               key={p.name}
+              delay={i * 130}
               className={
                 p.featured
                   ? "rounded border border-brand bg-ink p-8 shadow-brand"
@@ -242,7 +256,11 @@ export function Pricing() {
                     : "mt-6 text-display text-4xl text-foreground"
                 }
               >
-                {p.price}
+                {p.price.startsWith("$") ? (
+                  <Counter value={Number(p.price.slice(1))} prefix="$" duration={1200} />
+                ) : (
+                  p.price
+                )}
               </p>
               <p
                 className={
@@ -278,7 +296,7 @@ export function Pricing() {
               >
                 {p.cta}
               </a>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -297,22 +315,26 @@ export function Resources() {
     <section id="recursos" className="bg-surface py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <p className="text-display text-xs tracking-[0.3em] text-brand">Recursos</p>
-        <h2 className="mt-3 text-display text-3xl leading-tight text-foreground sm:text-4xl">
-          Material para tu práctica
-        </h2>
+        <Reveal>
+          <h2 className="mt-3 text-display text-3xl leading-tight text-foreground sm:text-4xl">
+            Material para tu práctica
+          </h2>
+        </Reveal>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {resources.map((r) => (
-            <a
+          {resources.map((r, i) => (
+            <Reveal key={r.title} delay={i * 120}>
+              <a
               key={r.title}
               href="#contacto"
-              className="group flex flex-col justify-between rounded border border-border bg-card p-7 transition-shadow hover:shadow-panel"
+              className="group flex h-full flex-col justify-between rounded border border-border bg-card p-7 transition-shadow hover:shadow-panel"
             >
               <span className="text-display text-[0.6rem] tracking-[0.2em] text-brand">{r.tag}</span>
               <h3 className="mt-4 text-display text-base leading-snug text-foreground">{r.title}</h3>
               <span className="mt-6 text-display text-[0.65rem] text-muted-foreground transition-colors group-hover:text-brand">
                 Descargar →
               </span>
-            </a>
+              </a>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -327,7 +349,7 @@ export function ContactCta() {
         id="registro"
         className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center"
       >
-        <div>
+        <Reveal>
           <p className="text-display text-xs tracking-[0.3em] text-brand">Contacto</p>
           <h2 className="mt-3 text-display text-3xl leading-tight text-brand-foreground sm:text-4xl">
             Regístrate gratis y recibe tu primer caso
@@ -345,9 +367,10 @@ export function ContactCta() {
             </span>
             (305) 987-0000
           </a>
-        </div>
+        </Reveal>
 
-        <form
+        <Reveal delay={160}>
+          <form
           onSubmit={(e) => e.preventDefault()}
           className="rounded border border-brand-foreground/12 bg-brand-foreground/[0.04] p-7"
         >
@@ -386,7 +409,8 @@ export function ContactCta() {
           >
             Regístrate gratis
           </button>
-        </form>
+          </form>
+        </Reveal>
       </div>
     </section>
   );
