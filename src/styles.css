@@ -224,6 +224,9 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.02em;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @utility bg-gradient-brand {
