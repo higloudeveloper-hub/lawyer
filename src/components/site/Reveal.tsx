@@ -66,6 +66,7 @@ export function Counter({
   suffix = "",
   decimals = 0,
   duration = 1600,
+  pad = 1,
   className,
 }: {
   value: number;
@@ -73,6 +74,7 @@ export function Counter({
   suffix?: string;
   decimals?: number;
   duration?: number;
+  pad?: number;
   className?: string;
 }) {
   const { ref, inView } = useInView<HTMLSpanElement>();
@@ -98,6 +100,7 @@ export function Counter({
   const formatted = display.toLocaleString("en-US", {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
+    minimumIntegerDigits: pad,
   });
 
   return (
