@@ -77,17 +77,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "D2LE2 Law — Plataforma legal para abogados" },
+      { title: "D2LE2 Law — Marketplace legal bilingüe" },
       {
         name: "description",
         content:
-          "Conectamos abogados con clientes migratorios en tiempo real. Tú decides a quién ayudar.",
+          "Ayuda migratoria y leads calificados en un solo lugar. Clientes gratis. Abogados pagan solo al desbloquear. Marketplace tecnológico — no somos un bufete.",
       },
       { name: "author", content: "D2LE2 Law" },
-      { property: "og:title", content: "D2LE2 Law — Plataforma legal para abogados" },
+      { property: "og:title", content: "D2LE2 Law — Marketplace legal bilingüe" },
       {
         property: "og:description",
-        content: "Recibe clientes migratorios en tiempo real. Sin riesgos, sin compromisos.",
+        content: "Elige tu camino: inicia tu caso o recibe clientes en tiempo real como abogado.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -115,7 +115,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <HeadContent />
       </head>

@@ -21,7 +21,7 @@ export function Logo({ className = "" }: { className?: string }) {
           D2LE2 Law
         </span>
         <span className="block text-display text-[0.6rem] tracking-[0.28em] text-brand">
-          Plataforma legal
+          Marketplace legal
         </span>
       </span>
     </a>
