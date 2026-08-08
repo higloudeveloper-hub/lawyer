@@ -36,7 +36,7 @@ export function TrustStrip() {
               delay={i * 90}
               className="flex items-center justify-center gap-3 px-2 text-center lg:text-left"
             >
-              <Icon className="h-6 w-6 shrink-0 text-brand-foreground/70" strokeWidth={1.5} />
+              <Icon className="h-6 w-6 shrink-0 text-brand-foreground/85" strokeWidth={1.5} />
               <span className="min-w-0 text-display text-[0.65rem] leading-snug tracking-wider text-brand-foreground/85">
                 {lines[0]}
                 <br />
@@ -108,7 +108,7 @@ export function Benefits() {
             Con la confianza de
           </span>
           {partners.map((p) => (
-            <span key={p} className="text-display text-sm text-foreground/60">
+            <span key={p} className="text-display text-sm text-foreground/80">
               {p}
             </span>
           ))}
@@ -154,11 +154,11 @@ export function HowItWorks() {
               delay={i * 130}
               className="relative rounded border border-brand-foreground/12 bg-brand-foreground/[0.04] p-7"
             >
-              <span className="text-display text-4xl text-brand/70">
+              <span className="text-display text-4xl text-brand">
                 <Counter value={Number(s.n)} duration={900} pad={2} />
               </span>
               <h3 className="mt-4 text-display text-base text-brand-foreground">{s.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-brand-foreground/70">{s.text}</p>
+              <p className="mt-3 text-sm leading-relaxed text-brand-foreground/85">{s.text}</p>
             </Reveal>
           ))}
         </ol>
@@ -174,7 +174,7 @@ export function HowItWorks() {
               <Icon className="h-6 w-6 shrink-0 text-brand" strokeWidth={1.5} />
               <div className="min-w-0">
                 <h3 className="text-display text-sm text-brand-foreground">{t}</h3>
-                <p className="mt-1 text-sm text-brand-foreground/65">{d}</p>
+                <p className="mt-1 text-sm text-brand-foreground/85">{d}</p>
               </div>
               </span>
             </Reveal>
@@ -265,7 +265,7 @@ export function Pricing() {
               <p
                 className={
                   p.featured
-                    ? "text-xs tracking-wider text-brand-foreground/60"
+                    ? "text-xs tracking-wider text-brand-foreground/80"
                     : "text-xs tracking-wider text-muted-foreground"
                 }
               >
@@ -354,7 +354,7 @@ export function ContactCta() {
           <h2 className="mt-3 text-display text-3xl leading-tight text-brand-foreground sm:text-4xl">
             Regístrate gratis y recibe tu primer caso
           </h2>
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-brand-foreground/70">
+          <p className="mt-5 max-w-md text-sm leading-relaxed text-brand-foreground/85">
             Sin cuotas iniciales ni compromisos. Nuestro equipo te acompaña en español para
             configurar tu perfil.
           </p>
@@ -382,7 +382,7 @@ export function ContactCta() {
               { label: "Estado", type: "text", ph: "Florida" },
             ].map((f) => (
               <label key={f.label} className="block min-w-0">
-                <span className="text-display text-[0.6rem] tracking-widest text-brand-foreground/70">
+                <span className="text-display text-[0.6rem] tracking-widest text-brand-foreground/85">
                   {f.label}
                 </span>
                 <input
@@ -394,7 +394,7 @@ export function ContactCta() {
             ))}
           </div>
           <label className="mt-4 block">
-            <span className="text-display text-[0.6rem] tracking-widest text-brand-foreground/70">
+            <span className="text-display text-[0.6rem] tracking-widest text-brand-foreground/85">
               Mensaje
             </span>
             <textarea

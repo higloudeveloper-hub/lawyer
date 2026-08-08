@@ -51,7 +51,7 @@ export function Hero() {
             </a>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-brand-foreground/70">
+          <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-brand-foreground/85">
             <span className="flex items-center gap-1.5 text-display text-xs text-emerald-400">
               <Star className="h-3.5 w-3.5 fill-current" /> Trustpilot
             </span>
@@ -72,7 +72,7 @@ export function Hero() {
                 <p className="text-display text-3xl text-brand">
                   <Counter value={s.value} prefix={s.prefix} suffix={s.suffix} />
                 </p>
-                <p className="mt-1 text-display text-[0.6rem] leading-snug tracking-wider text-brand-foreground/70">
+                <p className="mt-1 text-display text-[0.6rem] leading-snug tracking-wider text-brand-foreground/85">
                   {s.label}
                 </p>
               </div>

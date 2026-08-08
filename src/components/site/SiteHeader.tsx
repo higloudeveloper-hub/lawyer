@@ -41,7 +41,7 @@ export function SiteHeader() {
                       key={t}
                       className="flex shrink-0 items-center gap-2 text-display text-[0.65rem] whitespace-nowrap text-brand-foreground/95"
                     >
-                      <span className="text-brand-foreground/60">★</span>
+                      <span className="text-brand-foreground/80">★</span>
                       {t}
                     </span>
                   ))}

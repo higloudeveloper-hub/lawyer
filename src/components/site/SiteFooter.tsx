@@ -24,7 +24,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.4fr)_repeat(2,minmax(0,1fr))]">
         <div>
           <Logo />
-          <p className="mt-5 max-w-sm text-sm leading-relaxed text-brand-foreground/60">
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-brand-foreground/80">
             Plataforma que conecta abogados con clientes migratorios en tiempo real. Disponible 24/7,
             en español.
           </p>
@@ -37,7 +37,7 @@ export function SiteFooter() {
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="text-sm text-brand-foreground/70 transition-colors hover:text-brand-foreground"
+                    className="text-sm text-brand-foreground/85 transition-colors hover:text-brand-foreground"
                   >
                     {l.label}
                   </a>
