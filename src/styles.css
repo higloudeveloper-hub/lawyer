@@ -162,6 +162,8 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
   }
 
   * {
@@ -172,6 +174,12 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis-weight: none;
+    font-optical-sizing: auto;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "cv11" 1;
+    font-variant-ligatures: contextual common-ligatures;
   }
 
   h1,
@@ -180,6 +188,12 @@
   h4 {
     font-family: var(--font-display);
     letter-spacing: 0.01em;
+    text-wrap: balance;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
