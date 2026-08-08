@@ -11,6 +11,7 @@ import {
   UserRound,
   UserRoundCheck,
 } from "lucide-react";
+import { Counter, Reveal } from "./Reveal";
 
 const strip = [
   { icon: ShieldCheck, lines: ["Sin riesgos", "Sin compromisos"] },
@@ -28,9 +29,11 @@ export function TrustStrip() {
           Conecta. Ayuda. Haz crecer tu práctica.
         </p>
         <ul className="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5 lg:divide-x lg:divide-brand-foreground/15">
-          {strip.map(({ icon: Icon, lines }) => (
-            <li
+          {strip.map(({ icon: Icon, lines }, i) => (
+            <Reveal
+              as="li"
               key={lines.join()}
+              delay={i * 90}
               className="flex items-center justify-center gap-3 px-2 text-center lg:text-left"
             >
               <Icon className="h-6 w-6 shrink-0 text-brand-foreground/70" strokeWidth={1.5} />
@@ -39,7 +42,7 @@ export function TrustStrip() {
                 <br />
                 {lines[1]}
               </span>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </div>
@@ -73,7 +76,7 @@ export function Benefits() {
     <section id="beneficios" className="bg-surface py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,2.4fr)]">
-          <div>
+          <Reveal>
             <h2 className="text-display text-3xl leading-tight text-foreground sm:text-4xl">
               Más clientes.
               <br />
@@ -83,22 +86,24 @@ export function Benefits() {
               Únete a una plataforma diseñada para que abogados como tú conecten con más personas y
               hagan crecer su práctica.
             </p>
-          </div>
+          </Reveal>
           <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            {benefits.map(({ icon: Icon, title, text }) => (
-              <li
+            {benefits.map(({ icon: Icon, title, text }, i) => (
+              <Reveal
+                as="li"
                 key={title}
-                className="rounded border border-border bg-card p-6 text-center transition-shadow hover:shadow-panel"
+                delay={i * 110}
+                className="rounded border border-border bg-card p-6 text-center hover:shadow-panel"
               >
                 <Icon className="mx-auto h-8 w-8 text-foreground" strokeWidth={1.5} />
                 <h3 className="mt-4 text-display text-sm text-brand">{title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
-              </li>
+              </Reveal>
             ))}
           </ul>
         </div>
 
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 border-t border-border pt-8">
+        <Reveal className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 border-t border-border pt-8">
           <span className="text-display text-[0.6rem] tracking-[0.2em] text-muted-foreground">
             Con la confianza de
           </span>
@@ -107,7 +112,7 @@ export function Benefits() {
               {p}
             </span>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );
