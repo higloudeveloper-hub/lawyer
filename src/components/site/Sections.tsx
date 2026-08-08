@@ -29,24 +29,27 @@ export function TrustStrip() {
   const { trust } = t;
 
   return (
-    <section className="bg-ink-soft py-6 sm:py-8">
-      <div className="mx-auto max-w-7xl px-0 sm:px-6">
-        <p className="px-4 text-center text-display text-[0.7rem] tracking-[0.2em] text-brand-foreground sm:px-0 sm:text-sm">
+    <section className="border-t border-brand-foreground/10 bg-ink py-5 sm:border-0 sm:bg-ink-soft sm:py-8">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6">
+        <p className="hidden text-center text-display text-sm tracking-[0.2em] text-brand-foreground sm:block">
           {trust.tagline}
         </p>
-        {/* Mobile: horizontal icon strip like reference */}
-        <ul className="mt-5 flex gap-1 overflow-x-auto px-3 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-6 sm:grid sm:grid-cols-3 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-5 lg:divide-x lg:divide-brand-foreground/15 [&::-webkit-scrollbar]:hidden">
+        {/* Mobile: 5 equal icons in one row (Harrison reference). Desktop: original layout */}
+        <ul className="grid grid-cols-5 gap-0 sm:mt-6 sm:grid sm:grid-cols-3 sm:gap-6 lg:grid-cols-5 lg:divide-x lg:divide-brand-foreground/15">
           {trust.items.map(({ lines }, i) => {
             const Icon = trustIcons[i] ?? ShieldCheck;
             return (
               <Reveal
                 as="li"
                 key={lines.join()}
-                delay={i * 90}
-                className="flex w-[4.75rem] shrink-0 flex-col items-center gap-2 px-1 text-center sm:w-auto sm:flex-row sm:justify-center sm:gap-3 sm:px-2 lg:text-left"
+                delay={i * 70}
+                className="flex flex-col items-center gap-1.5 px-0.5 text-center sm:flex-row sm:justify-center sm:gap-3 sm:px-2 lg:text-left"
               >
-                <Icon className="h-5 w-5 shrink-0 text-brand-foreground/85 sm:h-6 sm:w-6" strokeWidth={1.5} />
-                <span className="min-w-0 text-display text-[0.52rem] leading-snug tracking-wider text-brand-foreground/85 sm:text-[0.65rem]">
+                <Icon
+                  className="h-[1.15rem] w-[1.15rem] shrink-0 text-brand-foreground/90 sm:h-6 sm:w-6 sm:text-brand-foreground/85"
+                  strokeWidth={1.5}
+                />
+                <span className="min-w-0 text-display text-[0.4rem] leading-[1.15] tracking-wider text-brand-foreground/85 sm:text-[0.65rem]">
                   {lines[0]}
                   <br />
                   {lines[1]}
@@ -136,20 +139,19 @@ export function Benefits() {
   const { benefits } = t;
 
   return (
-    <section id="beneficios" className="bg-surface py-12 sm:py-16 lg:py-20">
+    <section id="beneficios" className="bg-surface py-10 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="grid gap-8 sm:gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,2.4fr)]">
+        <div className="grid gap-6 sm:gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,2.4fr)]">
           <Reveal>
-            <h2 className="text-display text-[1.75rem] leading-tight text-foreground sm:text-4xl">
-              {benefits.title}
-              <br />
-              {benefits.titleLine2}
+            <h2 className="text-display text-[1.7rem] leading-tight text-foreground sm:text-4xl">
+              {benefits.title}{" "}
+              <span className="text-brand">{benefits.titleLine2}</span>
             </h2>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground sm:mt-4">
               {benefits.text}
             </p>
           </Reveal>
-          {/* Mobile: horizontal scroll cards like reference "Real Results" */}
+          {/* Mobile: horizontal result-style cards */}
           <ul className="flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:grid sm:gap-5 sm:overflow-visible sm:pb-0 sm:grid-cols-2 xl:grid-cols-4 [&::-webkit-scrollbar]:hidden">
             {benefits.items.map(({ title, text }, i) => {
               const Icon = benefitIcons[i] ?? UserRound;
@@ -158,18 +160,18 @@ export function Benefits() {
                   as="li"
                   key={title}
                   delay={i * 110}
-                  className="w-[78%] shrink-0 rounded border border-border bg-card p-5 text-center hover:shadow-panel sm:w-auto sm:p-6"
+                  className="w-[72%] shrink-0 rounded border border-border bg-card p-5 text-left shadow-sm hover:shadow-panel sm:w-auto sm:p-6 sm:text-center"
                 >
-                  <Icon className="mx-auto h-8 w-8 text-foreground" strokeWidth={1.5} />
-                  <h3 className="mt-4 text-display text-sm text-brand">{title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
+                  <Icon className="mb-3 h-6 w-6 text-brand sm:mx-auto sm:mb-0 sm:h-8 sm:w-8 sm:text-foreground" strokeWidth={1.5} />
+                  <h3 className="mt-1 text-display text-base text-brand sm:mt-4 sm:text-sm">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:mt-3">{text}</p>
                 </Reveal>
               );
             })}
           </ul>
         </div>
 
-        <Reveal className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 border-t border-border pt-8">
+        <Reveal className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-border pt-6 sm:mt-14 sm:gap-x-10 sm:gap-y-4 sm:pt-8">
           <span className="text-display text-[0.6rem] tracking-[0.2em] text-muted-foreground">
             {benefits.partnersLabel}
           </span>

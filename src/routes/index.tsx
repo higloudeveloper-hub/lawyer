@@ -35,7 +35,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <LocaleProvider>
-      <div className="min-h-screen bg-background scroll-smooth pb-[5.5rem] sm:pb-0">
+      <div className="min-h-screen bg-background scroll-smooth pb-[4.25rem] sm:pb-0">
         <SiteHeader />
         <main>
           <Hero />
