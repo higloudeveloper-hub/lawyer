@@ -315,22 +315,26 @@ export function Resources() {
     <section id="recursos" className="bg-surface py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <p className="text-display text-xs tracking-[0.3em] text-brand">Recursos</p>
-        <h2 className="mt-3 text-display text-3xl leading-tight text-foreground sm:text-4xl">
-          Material para tu práctica
-        </h2>
+        <Reveal>
+          <h2 className="mt-3 text-display text-3xl leading-tight text-foreground sm:text-4xl">
+            Material para tu práctica
+          </h2>
+        </Reveal>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {resources.map((r) => (
-            <a
+          {resources.map((r, i) => (
+            <Reveal key={r.title} delay={i * 120}>
+              <a
               key={r.title}
               href="#contacto"
-              className="group flex flex-col justify-between rounded border border-border bg-card p-7 transition-shadow hover:shadow-panel"
+              className="group flex h-full flex-col justify-between rounded border border-border bg-card p-7 transition-shadow hover:shadow-panel"
             >
               <span className="text-display text-[0.6rem] tracking-[0.2em] text-brand">{r.tag}</span>
               <h3 className="mt-4 text-display text-base leading-snug text-foreground">{r.title}</h3>
               <span className="mt-6 text-display text-[0.65rem] text-muted-foreground transition-colors group-hover:text-brand">
                 Descargar →
               </span>
-            </a>
+              </a>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -345,7 +349,7 @@ export function ContactCta() {
         id="registro"
         className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center"
       >
-        <div>
+        <Reveal>
           <p className="text-display text-xs tracking-[0.3em] text-brand">Contacto</p>
           <h2 className="mt-3 text-display text-3xl leading-tight text-brand-foreground sm:text-4xl">
             Regístrate gratis y recibe tu primer caso
@@ -363,9 +367,10 @@ export function ContactCta() {
             </span>
             (305) 987-0000
           </a>
-        </div>
+        </Reveal>
 
-        <form
+        <Reveal delay={160}>
+          <form
           onSubmit={(e) => e.preventDefault()}
           className="rounded border border-brand-foreground/12 bg-brand-foreground/[0.04] p-7"
         >
@@ -404,7 +409,8 @@ export function ContactCta() {
           >
             Regístrate gratis
           </button>
-        </form>
+          </form>
+        </Reveal>
       </div>
     </section>
   );
