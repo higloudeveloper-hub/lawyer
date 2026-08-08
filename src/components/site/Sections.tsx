@@ -141,19 +141,25 @@ export function HowItWorks() {
     <section id="como-funciona" className="bg-gradient-ink py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <p className="text-display text-xs tracking-[0.3em] text-brand">Cómo funciona</p>
-        <h2 className="mt-3 max-w-xl text-display text-3xl leading-tight text-brand-foreground sm:text-4xl">
-          Tres pasos para tu próximo caso
-        </h2>
+        <Reveal>
+          <h2 className="max-w-xl text-display text-3xl leading-tight text-brand-foreground sm:text-4xl">
+            Tres pasos para tu próximo caso
+          </h2>
+        </Reveal>
         <ol className="mt-12 grid gap-6 md:grid-cols-3">
-          {steps.map((s) => (
-            <li
+          {steps.map((s, i) => (
+            <Reveal
+              as="li"
               key={s.n}
+              delay={i * 130}
               className="relative rounded border border-brand-foreground/12 bg-brand-foreground/[0.04] p-7"
             >
-              <span className="text-display text-4xl text-brand/70">{s.n}</span>
+              <span className="text-display text-4xl text-brand/70">
+                <Counter value={Number(s.n)} decimals={0} duration={900} />
+              </span>
               <h3 className="mt-4 text-display text-base text-brand-foreground">{s.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-brand-foreground/70">{s.text}</p>
-            </li>
+            </Reveal>
           ))}
         </ol>
 
@@ -162,14 +168,16 @@ export function HowItWorks() {
             { icon: LaptopMinimal, t: "Panel inteligente", d: "Filtra casos por estado, idioma y tipo de trámite." },
             { icon: FileCheck2, t: "Casos verificados", d: "Validamos cada solicitud antes de mostrarla." },
             { icon: Handshake, t: "Soporte dedicado", d: "Un equipo en español acompaña tu operación 24/7." },
-          ].map(({ icon: Icon, t, d }) => (
-            <div key={t} id={t === "Soporte dedicado" ? "soporte" : undefined} className="flex gap-4">
+          ].map(({ icon: Icon, t, d }, i) => (
+            <Reveal key={t} delay={i * 110} className="flex gap-4">
+              <span id={t === "Soporte dedicado" ? "soporte" : undefined} className="contents">
               <Icon className="h-6 w-6 shrink-0 text-brand" strokeWidth={1.5} />
               <div className="min-w-0">
                 <h3 className="text-display text-sm text-brand-foreground">{t}</h3>
                 <p className="mt-1 text-sm text-brand-foreground/65">{d}</p>
               </div>
-            </div>
+              </span>
+            </Reveal>
           ))}
         </div>
       </div>
