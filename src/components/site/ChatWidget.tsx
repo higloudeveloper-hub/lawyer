@@ -1,26 +1,11 @@
 import { useState } from "react";
 import { MessageSquare, Minus, Paperclip, Send, X } from "lucide-react";
-
-const messages = [
-  {
-    from: "bot" as const,
-    text: "¡Hola! 👋 ¿En qué podemos ayudarte hoy?",
-    time: "10:30 AM",
-  },
-  {
-    from: "me" as const,
-    text: "Hola, quiero saber cómo funciona la plataforma.",
-    time: "10:31 AM",
-  },
-  {
-    from: "bot" as const,
-    text: "Con gusto te explico. Conectamos abogados con clientes migratorios en tiempo real. Tú decides a quién aceptar y cuándo.",
-    time: "10:32 AM",
-  },
-];
+import { useLocale } from "@/lib/locale";
 
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
+  const { t } = useLocale();
+  const { chat } = t;
 
   return (
     <div className="fixed right-4 bottom-4 z-50 flex flex-col items-end gap-3 sm:right-6 sm:bottom-6">
@@ -37,12 +22,12 @@ export function ChatWidget() {
                 D2LE2 Law
               </span>
               <span className="flex items-center gap-1.5 text-[0.7rem] text-brand-foreground/85">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> En línea
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> {chat.online}
               </span>
             </span>
             <button
               onClick={() => setOpen(false)}
-              aria-label="Minimizar chat"
+              aria-label={chat.minimize}
               className="shrink-0 rounded p-1 text-brand-foreground/90 transition-colors hover:bg-brand-foreground/15"
             >
               <Minus className="h-4 w-4" />
@@ -50,7 +35,7 @@ export function ChatWidget() {
           </div>
 
           <div className="flex max-h-[22rem] flex-col gap-3 overflow-y-auto bg-muted/60 p-4">
-            {messages.map((m, i) => (
+            {chat.messages.map((m, i) => (
               <div key={i} className={m.from === "me" ? "flex justify-end" : "flex justify-start"}>
                 <div
                   className={
@@ -79,16 +64,16 @@ export function ChatWidget() {
             className="flex items-center gap-2 border-t border-border bg-card px-3 py-2.5"
           >
             <input
-              placeholder="Escribe tu mensaje..."
-              aria-label="Escribe tu mensaje"
+              placeholder={chat.placeholder}
+              aria-label={chat.placeholder}
               className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
             />
-            <button type="button" aria-label="Adjuntar" className="shrink-0 text-muted-foreground">
+            <button type="button" aria-label={chat.attach} className="shrink-0 text-muted-foreground">
               <Paperclip className="h-4 w-4" />
             </button>
             <button
               type="submit"
-              aria-label="Enviar mensaje"
+              aria-label={chat.send}
               className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand text-brand-foreground transition-transform hover:scale-105"
             >
               <Send className="h-4 w-4" />
@@ -99,7 +84,7 @@ export function ChatWidget() {
 
       <button
         onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Cerrar chat" : "Abrir chat"}
+        aria-label={open ? chat.close : chat.open}
         className="grid h-14 w-14 place-items-center rounded-full bg-brand text-brand-foreground shadow-brand transition-transform hover:scale-105"
       >
         {open ? <X className="h-6 w-6" /> : <MessageSquare className="h-6 w-6" />}
