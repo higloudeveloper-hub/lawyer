@@ -155,7 +155,7 @@ export function HowItWorks() {
               className="relative rounded border border-brand-foreground/12 bg-brand-foreground/[0.04] p-7"
             >
               <span className="text-display text-4xl text-brand/70">
-                <Counter value={Number(s.n)} decimals={0} duration={900} />
+                <Counter value={Number(s.n)} duration={900} pad={2} />
               </span>
               <h3 className="mt-4 text-display text-base text-brand-foreground">{s.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-brand-foreground/70">{s.text}</p>
@@ -216,16 +216,17 @@ export function Pricing() {
   return (
     <section id="precios" className="bg-background py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="max-w-xl">
+        <Reveal className="max-w-xl">
           <p className="text-display text-xs tracking-[0.3em] text-brand">Precios</p>
           <h2 className="mt-3 text-display text-3xl leading-tight text-foreground sm:text-4xl">
             Paga solo por los casos que aceptas
           </h2>
-        </div>
+        </Reveal>
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {plans.map((p) => (
-            <div
+          {plans.map((p, i) => (
+            <Reveal
               key={p.name}
+              delay={i * 130}
               className={
                 p.featured
                   ? "rounded border border-brand bg-ink p-8 shadow-brand"
@@ -255,7 +256,11 @@ export function Pricing() {
                     : "mt-6 text-display text-4xl text-foreground"
                 }
               >
-                {p.price}
+                {p.price.startsWith("$") ? (
+                  <Counter value={Number(p.price.slice(1))} prefix="$" duration={1200} />
+                ) : (
+                  p.price
+                )}
               </p>
               <p
                 className={
@@ -291,7 +296,7 @@ export function Pricing() {
               >
                 {p.cta}
               </a>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
