@@ -1,11 +1,12 @@
 import { ArrowRight, CalendarCheck, Phone, Star } from "lucide-react";
 import heroImage from "@/assets/hero-lawyer.jpg";
+import { Counter, Reveal } from "./Reveal";
 
 const stats = [
-  { value: "+15,000", label: "Clientes conectados con abogados" },
-  { value: "+2,500", label: "Abogados activos" },
-  { value: "98%", label: "Tasa de satisfacción" },
-  { value: "20+", label: "Áreas de práctica" },
+  { value: 15000, prefix: "+", suffix: "", label: "Clientes conectados con abogados" },
+  { value: 2500, prefix: "+", suffix: "", label: "Abogados activos" },
+  { value: 98, prefix: "", suffix: "%", label: "Tasa de satisfacción" },
+  { value: 20, prefix: "", suffix: "+", label: "Áreas de práctica" },
 ];
 
 export function Hero() {
@@ -21,7 +22,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(100deg,oklch(0.13_0.01_20)_0%,oklch(0.13_0.01_20/0.92)_38%,oklch(0.13_0.01_20/0.35)_62%,oklch(0.13_0.01_20/0.75)_100%)]" />
 
       <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1.15fr)_auto] lg:items-center lg:py-24">
-        <div className="max-w-2xl">
+        <Reveal className="max-w-2xl">
           <p className="text-display text-xs tracking-[0.3em] text-brand">Plataforma para abogados</p>
           <h1 className="mt-4 text-display text-4xl leading-[1.05] text-brand-foreground sm:text-5xl lg:text-6xl">
             Recibe clientes migratorios en tiempo real.
@@ -62,20 +63,22 @@ export function Hero() {
             <span className="text-display text-sm text-brand-foreground">4.9</span>
             <span className="text-xs">| 1,200+ Reseñas</span>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="w-full border border-brand/40 bg-ink/80 p-6 backdrop-blur lg:w-72">
+        <Reveal delay={180} className="w-full border border-brand/40 bg-ink/80 p-6 backdrop-blur lg:w-72">
           <div className="grid grid-cols-2 gap-6 lg:grid-cols-1">
             {stats.map((s) => (
               <div key={s.label} className="text-center">
-                <p className="text-display text-3xl text-brand">{s.value}</p>
+                <p className="text-display text-3xl text-brand">
+                  <Counter value={s.value} prefix={s.prefix} suffix={s.suffix} />
+                </p>
                 <p className="mt-1 text-display text-[0.6rem] leading-snug tracking-wider text-brand-foreground/70">
                   {s.label}
                 </p>
               </div>
             ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
