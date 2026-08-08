@@ -48,8 +48,8 @@ export function Reveal({ children, className, delay = 0, as = "div" }: RevealPro
       ref={ref as never}
       style={{ transitionDelay: `${delay}ms` }}
       className={cn(
-        "translate-y-6 opacity-0 blur-[2px] transition-[opacity,transform,filter] duration-700 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:blur-0",
-        inView && "translate-y-0 opacity-100 blur-0",
+        "translate-y-5 opacity-0 transition-[opacity,transform] duration-500 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100",
+        inView && "translate-y-0 opacity-100",
         className,
       )}
     >
