@@ -111,7 +111,7 @@ export function SiteHeader() {
               aria-label="Abrir menú"
               className="rounded p-2 text-brand-foreground xl:hidden"
             >
-              {open ? <Menu className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
