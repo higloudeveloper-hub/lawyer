@@ -29,12 +29,13 @@ export function TrustStrip() {
   const { trust } = t;
 
   return (
-    <section className="bg-ink-soft py-8">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <p className="text-center text-display text-sm tracking-[0.2em] text-brand-foreground">
+    <section className="bg-ink-soft py-6 sm:py-8">
+      <div className="mx-auto max-w-7xl px-0 sm:px-6">
+        <p className="px-4 text-center text-display text-[0.7rem] tracking-[0.2em] text-brand-foreground sm:px-0 sm:text-sm">
           {trust.tagline}
         </p>
-        <ul className="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5 lg:divide-x lg:divide-brand-foreground/15">
+        {/* Mobile: horizontal icon strip like reference */}
+        <ul className="mt-5 flex gap-1 overflow-x-auto px-3 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-6 sm:grid sm:grid-cols-3 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-5 lg:divide-x lg:divide-brand-foreground/15 [&::-webkit-scrollbar]:hidden">
           {trust.items.map(({ lines }, i) => {
             const Icon = trustIcons[i] ?? ShieldCheck;
             return (
@@ -42,10 +43,10 @@ export function TrustStrip() {
                 as="li"
                 key={lines.join()}
                 delay={i * 90}
-                className="flex items-center justify-center gap-3 px-2 text-center lg:text-left"
+                className="flex w-[4.75rem] shrink-0 flex-col items-center gap-2 px-1 text-center sm:w-auto sm:flex-row sm:justify-center sm:gap-3 sm:px-2 lg:text-left"
               >
-                <Icon className="h-6 w-6 shrink-0 text-brand-foreground/85" strokeWidth={1.5} />
-                <span className="min-w-0 text-display text-[0.65rem] leading-snug tracking-wider text-brand-foreground/85">
+                <Icon className="h-5 w-5 shrink-0 text-brand-foreground/85 sm:h-6 sm:w-6" strokeWidth={1.5} />
+                <span className="min-w-0 text-display text-[0.52rem] leading-snug tracking-wider text-brand-foreground/85 sm:text-[0.65rem]">
                   {lines[0]}
                   <br />
                   {lines[1]}
@@ -64,15 +65,17 @@ export function AudiencePaths() {
   const { audience } = t;
 
   return (
-    <section id={audience.id} className="bg-background py-16 lg:py-20">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-2">
-        <Reveal className="rounded border border-border bg-surface p-8">
-          <p className="text-display text-xs tracking-[0.3em] text-brand">{audience.clientLabel}</p>
-          <h2 className="mt-3 text-display text-3xl leading-tight text-foreground">
+    <section id={audience.id} className="bg-background py-12 sm:py-16 lg:py-20">
+      <div className="mx-auto grid max-w-7xl gap-5 px-4 sm:gap-8 sm:px-6 lg:grid-cols-2">
+        <Reveal className="rounded border border-border bg-surface p-5 sm:p-8">
+          <p className="text-display text-[0.65rem] tracking-[0.3em] text-brand sm:text-xs">
+            {audience.clientLabel}
+          </p>
+          <h2 className="mt-2 text-display text-[1.65rem] leading-tight text-foreground sm:mt-3 sm:text-3xl">
             {audience.clientTitle}
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{audience.clientSub}</p>
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:mt-4">{audience.clientSub}</p>
+          <ul className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2">
             {audience.clientCards.map((card, i) => {
               const Icon = clientAudienceIcons[i] ?? UserRound;
               return (
@@ -88,19 +91,21 @@ export function AudiencePaths() {
           </ul>
           <a
             href="#registro"
-            className="mt-8 inline-flex rounded bg-brand px-6 py-3 text-display text-xs text-brand-foreground shadow-brand transition-colors hover:bg-brand-dark"
+            className="mt-6 inline-flex w-full items-center justify-center rounded bg-brand px-6 py-3.5 text-display text-xs text-brand-foreground shadow-brand transition-colors hover:bg-brand-dark sm:mt-8 sm:w-auto"
           >
             {audience.clientCta}
           </a>
         </Reveal>
 
-        <Reveal delay={120} className="rounded border border-brand/30 bg-ink p-8">
-          <p className="text-display text-xs tracking-[0.3em] text-brand">{audience.lawyerLabel}</p>
-          <h2 className="mt-3 text-display text-3xl leading-tight text-brand-foreground">
+        <Reveal delay={120} className="rounded border border-brand/30 bg-ink p-5 sm:p-8">
+          <p className="text-display text-[0.65rem] tracking-[0.3em] text-brand sm:text-xs">
+            {audience.lawyerLabel}
+          </p>
+          <h2 className="mt-2 text-display text-[1.65rem] leading-tight text-brand-foreground sm:mt-3 sm:text-3xl">
             {audience.lawyerTitle}
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-brand-foreground/85">{audience.lawyerSub}</p>
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+          <p className="mt-3 text-sm leading-relaxed text-brand-foreground/85 sm:mt-4">{audience.lawyerSub}</p>
+          <ul className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2">
             {audience.lawyerCards.map((card, i) => {
               const Icon = lawyerAudienceIcons[i] ?? Scale;
               return (
@@ -116,7 +121,7 @@ export function AudiencePaths() {
           </ul>
           <a
             href="#registro"
-            className="mt-8 inline-flex rounded border border-brand-foreground/25 px-6 py-3 text-display text-xs text-brand-foreground transition-colors hover:bg-brand-foreground/10"
+            className="mt-6 inline-flex w-full items-center justify-center rounded border border-brand-foreground/25 px-6 py-3.5 text-display text-xs text-brand-foreground transition-colors hover:bg-brand-foreground/10 sm:mt-8 sm:w-auto"
           >
             {audience.lawyerCta}
           </a>
@@ -131,20 +136,21 @@ export function Benefits() {
   const { benefits } = t;
 
   return (
-    <section id="beneficios" className="bg-surface py-16 lg:py-20">
+    <section id="beneficios" className="bg-surface py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,2.4fr)]">
+        <div className="grid gap-8 sm:gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,2.4fr)]">
           <Reveal>
-            <h2 className="text-display text-3xl leading-tight text-foreground sm:text-4xl">
+            <h2 className="text-display text-[1.75rem] leading-tight text-foreground sm:text-4xl">
               {benefits.title}
               <br />
               {benefits.titleLine2}
             </h2>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground sm:mt-4">
               {benefits.text}
             </p>
           </Reveal>
-          <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {/* Mobile: horizontal scroll cards like reference "Real Results" */}
+          <ul className="flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:grid sm:gap-5 sm:overflow-visible sm:pb-0 sm:grid-cols-2 xl:grid-cols-4 [&::-webkit-scrollbar]:hidden">
             {benefits.items.map(({ title, text }, i) => {
               const Icon = benefitIcons[i] ?? UserRound;
               return (
@@ -152,7 +158,7 @@ export function Benefits() {
                   as="li"
                   key={title}
                   delay={i * 110}
-                  className="rounded border border-border bg-card p-6 text-center hover:shadow-panel"
+                  className="w-[78%] shrink-0 rounded border border-border bg-card p-5 text-center hover:shadow-panel sm:w-auto sm:p-6"
                 >
                   <Icon className="mx-auto h-8 w-8 text-foreground" strokeWidth={1.5} />
                   <h3 className="mt-4 text-display text-sm text-brand">{title}</h3>
@@ -185,23 +191,23 @@ export function HowItWorks() {
   const steps = tab === "client" ? how.clientSteps : how.lawyerSteps;
 
   return (
-    <section id="como-funciona" className="bg-gradient-ink py-16 lg:py-24">
+    <section id="como-funciona" className="bg-gradient-ink py-12 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <p className="text-display text-xs tracking-[0.3em] text-brand">{how.label}</p>
+        <p className="text-display text-[0.65rem] tracking-[0.3em] text-brand sm:text-xs">{how.label}</p>
         <Reveal>
-          <h2 className="max-w-xl text-display text-3xl leading-tight text-brand-foreground sm:text-4xl">
+          <h2 className="max-w-xl text-display text-[1.75rem] leading-tight text-brand-foreground sm:text-4xl">
             {how.title}
           </h2>
         </Reveal>
 
-        <div className="mt-8 inline-flex rounded border border-brand-foreground/20 p-1">
+        <div className="mt-6 inline-flex w-full rounded border border-brand-foreground/20 p-1 sm:mt-8 sm:w-auto">
           <button
             type="button"
             onClick={() => setTab("client")}
             className={
               tab === "client"
-                ? "rounded bg-brand px-5 py-2 text-display text-xs text-brand-foreground"
-                : "rounded px-5 py-2 text-display text-xs text-brand-foreground/75 transition-colors hover:text-brand-foreground"
+                ? "flex-1 rounded bg-brand px-5 py-2.5 text-display text-xs text-brand-foreground sm:flex-none"
+                : "flex-1 rounded px-5 py-2.5 text-display text-xs text-brand-foreground/75 transition-colors hover:text-brand-foreground sm:flex-none"
             }
           >
             {how.tabClient}
@@ -211,21 +217,21 @@ export function HowItWorks() {
             onClick={() => setTab("lawyer")}
             className={
               tab === "lawyer"
-                ? "rounded bg-brand px-5 py-2 text-display text-xs text-brand-foreground"
-                : "rounded px-5 py-2 text-display text-xs text-brand-foreground/75 transition-colors hover:text-brand-foreground"
+                ? "flex-1 rounded bg-brand px-5 py-2.5 text-display text-xs text-brand-foreground sm:flex-none"
+                : "flex-1 rounded px-5 py-2.5 text-display text-xs text-brand-foreground/75 transition-colors hover:text-brand-foreground sm:flex-none"
             }
           >
             {how.tabLawyer}
           </button>
         </div>
 
-        <ol className="mt-12 grid gap-6 md:grid-cols-3">
+        <ol className="mt-8 grid gap-4 sm:mt-12 sm:gap-6 md:grid-cols-3">
           {steps.map((s, i) => (
             <Reveal
               as="li"
               key={`${tab}-${s.n}`}
               delay={i * 130}
-              className="relative rounded border border-brand-foreground/12 bg-brand-foreground/[0.04] p-7"
+              className="relative rounded border border-brand-foreground/12 bg-brand-foreground/[0.04] p-5 sm:p-7"
             >
               <span className="text-display text-4xl text-brand">
                 <Counter value={Number(s.n)} duration={900} pad={2} />
@@ -262,23 +268,23 @@ export function Pricing() {
   const { pricing } = t;
 
   return (
-    <section id="precios" className="bg-background py-16 lg:py-24">
+    <section id="precios" className="bg-background py-12 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Reveal className="max-w-xl">
-          <p className="text-display text-xs tracking-[0.3em] text-brand">{pricing.label}</p>
-          <h2 className="mt-3 text-display text-3xl leading-tight text-foreground sm:text-4xl">
+          <p className="text-display text-[0.65rem] tracking-[0.3em] text-brand sm:text-xs">{pricing.label}</p>
+          <h2 className="mt-2 text-display text-[1.75rem] leading-tight text-foreground sm:mt-3 sm:text-4xl">
             {pricing.title}
           </h2>
         </Reveal>
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+        <div className="mt-8 flex gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-12 sm:grid sm:gap-6 sm:overflow-visible sm:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
           {pricing.plans.map((p, i) => (
             <Reveal
               key={p.name}
               delay={i * 130}
               className={
                 p.featured
-                  ? "rounded border border-brand bg-ink p-8 shadow-brand"
-                  : "rounded border border-border bg-card p-8"
+                  ? "w-[85%] shrink-0 rounded border border-brand bg-ink p-6 shadow-brand sm:w-auto sm:p-8"
+                  : "w-[85%] shrink-0 rounded border border-border bg-card p-6 sm:w-auto sm:p-8"
               }
             >
               <div className="flex items-center justify-between gap-3">
@@ -357,20 +363,20 @@ export function Resources() {
   const { resources } = t;
 
   return (
-    <section id="recursos" className="bg-surface py-16 lg:py-24">
+    <section id="recursos" className="bg-surface py-12 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <p className="text-display text-xs tracking-[0.3em] text-brand">{resources.label}</p>
+        <p className="text-display text-[0.65rem] tracking-[0.3em] text-brand sm:text-xs">{resources.label}</p>
         <Reveal>
-          <h2 className="mt-3 text-display text-3xl leading-tight text-foreground sm:text-4xl">
+          <h2 className="mt-2 text-display text-[1.75rem] leading-tight text-foreground sm:mt-3 sm:text-4xl">
             {resources.title}
           </h2>
         </Reveal>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-8 flex gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-12 sm:grid sm:gap-6 sm:overflow-visible sm:pb-0 md:grid-cols-3 [&::-webkit-scrollbar]:hidden">
           {resources.items.map((r, i) => (
-            <Reveal key={r.title} delay={i * 120}>
+            <Reveal key={r.title} delay={i * 120} className="w-[78%] shrink-0 sm:w-auto">
               <a
                 href="#contacto"
-                className="group flex h-full flex-col justify-between rounded border border-border bg-card p-7 transition-shadow hover:shadow-panel"
+                className="group flex h-full flex-col justify-between rounded border border-border bg-card p-5 transition-shadow hover:shadow-panel sm:p-7"
               >
                 <span className="text-display text-[0.6rem] tracking-[0.2em] text-brand">{r.tag}</span>
                 <h3 className="mt-4 text-display text-base leading-snug text-foreground">{r.title}</h3>
@@ -392,17 +398,17 @@ export function ContactCta() {
   const [role, setRole] = useState<"client" | "lawyer">("client");
 
   return (
-    <section id="contacto" className="bg-ink py-16 lg:py-24">
+    <section id="contacto" className="bg-ink py-12 sm:py-16 lg:py-24">
       <div
         id="registro"
-        className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center"
+        className="mx-auto grid max-w-7xl gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-2 lg:items-center"
       >
         <Reveal>
-          <p className="text-display text-xs tracking-[0.3em] text-brand">{contact.label}</p>
-          <h2 className="mt-3 text-display text-3xl leading-tight text-brand-foreground sm:text-4xl">
+          <p className="text-display text-[0.65rem] tracking-[0.3em] text-brand sm:text-xs">{contact.label}</p>
+          <h2 className="mt-2 text-display text-[1.75rem] leading-tight text-brand-foreground sm:mt-3 sm:text-4xl">
             {contact.title}
           </h2>
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-brand-foreground/85">
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-brand-foreground/85 sm:mt-5">
             {contact.text}
           </p>
           <a
@@ -419,7 +425,7 @@ export function ContactCta() {
         <Reveal delay={160}>
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="rounded border border-brand-foreground/12 bg-brand-foreground/[0.04] p-7"
+            className="rounded border border-brand-foreground/12 bg-brand-foreground/[0.04] p-5 sm:p-7"
           >
             <div className="mb-5 inline-flex rounded border border-brand-foreground/20 p-1">
               <button

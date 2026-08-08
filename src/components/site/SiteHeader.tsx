@@ -11,15 +11,15 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40">
       <div className="overflow-hidden bg-gradient-brand">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-3 py-1.5 sm:px-6 sm:py-2">
           <div className="min-w-0 flex-1 overflow-hidden">
-            <div className="flex w-max marquee-track items-center gap-6 md:animate-none">
+            <div className="flex w-max marquee-track items-center gap-5 sm:gap-6 md:animate-none">
               {[0, 1].map((dup) => (
-                <div key={dup} className="flex items-center gap-6">
+                <div key={dup} className="flex items-center gap-5 sm:gap-6">
                   {header.ticker.map((item) => (
                     <span
                       key={`${dup}-${item}`}
-                      className="flex shrink-0 items-center gap-2 text-display text-[0.65rem] whitespace-nowrap text-brand-foreground/95"
+                      className="flex shrink-0 items-center gap-2 text-display text-[0.58rem] whitespace-nowrap text-brand-foreground/95 sm:text-[0.65rem]"
                     >
                       <span className="text-brand-foreground/80">★</span>
                       {item}
@@ -36,9 +36,9 @@ export function SiteHeader() {
       </div>
 
       <div className="border-b border-brand-foreground/10 bg-ink/95 backdrop-blur">
-        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3 sm:px-6 lg:py-4">
-          <div className="flex min-w-0 items-center gap-8">
-            <Logo />
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-3 py-2.5 sm:gap-4 sm:px-6 sm:py-3 lg:py-4">
+          <div className="flex min-w-0 flex-1 items-center gap-8">
+            <Logo className="min-w-0" />
             <nav className="hidden items-center gap-6 xl:flex">
               {header.nav.map((item) => (
                 <div key={item.label} className="group relative">
@@ -67,7 +67,7 @@ export function SiteHeader() {
             </nav>
           </div>
 
-          <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-4">
             <div
               className="hidden items-center rounded border border-brand-foreground/20 p-0.5 text-display text-[0.65rem] sm:flex"
               role="group"
@@ -97,13 +97,14 @@ export function SiteHeader() {
               </button>
             </div>
 
-            <a href={t.phoneHref} className="hidden items-center gap-2 lg:flex">
-              <Phone className="h-4 w-4 shrink-0 text-brand" />
-              <span>
-                <span className="block text-display text-base leading-none text-brand-foreground">
+            {/* Mobile: compact phone (reference layout). Desktop: full block from lg */}
+            <a href={t.phoneHref} className="flex items-center gap-1.5 sm:gap-2">
+              <Phone className="h-3.5 w-3.5 shrink-0 text-brand sm:h-4 sm:w-4" />
+              <span className="min-w-0">
+                <span className="block text-display text-[0.72rem] leading-none text-brand-foreground sm:text-base">
                   {t.phone}
                 </span>
-                <span className="block text-[0.6rem] tracking-widest text-brand">
+                <span className="mt-0.5 block text-[0.5rem] tracking-widest text-brand sm:text-[0.6rem]">
                   {header.phoneSub}
                 </span>
               </span>
@@ -117,14 +118,14 @@ export function SiteHeader() {
             </a>
             <a
               href="#registro"
-              className="hidden shrink-0 rounded bg-brand px-4 py-2.5 text-display text-[0.65rem] text-brand-foreground shadow-brand transition-colors hover:bg-brand-dark sm:block"
+              className="hidden shrink-0 rounded bg-brand px-4 py-2.5 text-display text-[0.65rem] text-brand-foreground shadow-brand transition-colors hover:bg-brand-dark lg:block"
             >
               {header.ctaLawyer}
             </a>
             <button
               onClick={() => setOpen((v) => !v)}
               aria-label={header.menuOpen}
-              className="rounded p-2 text-brand-foreground xl:hidden"
+              className="rounded p-1.5 text-brand-foreground xl:hidden"
             >
               {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -139,7 +140,7 @@ export function SiteHeader() {
                   key={item.label}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="border-b border-brand-foreground/10 py-3 text-display text-sm text-brand-foreground/85 transition-colors hover:text-brand"
+                  className="border-b border-brand-foreground/10 py-3.5 text-display text-sm text-brand-foreground/85 transition-colors hover:text-brand"
                 >
                   {item.label}
                 </a>
@@ -170,22 +171,16 @@ export function SiteHeader() {
               </div>
               <div className="flex flex-col gap-3 py-4">
                 <a
-                  href={t.phoneHref}
-                  className="flex items-center gap-2 text-display text-sm text-brand-foreground"
-                >
-                  <Phone className="h-4 w-4 text-brand" /> {t.phone}
-                </a>
-                <a
                   href="#registro"
                   onClick={() => setOpen(false)}
-                  className="rounded border border-brand-foreground/25 px-5 py-3 text-center text-display text-xs text-brand-foreground"
+                  className="rounded border border-brand-foreground/25 px-5 py-3.5 text-center text-display text-xs text-brand-foreground"
                 >
                   {header.ctaClient}
                 </a>
                 <a
                   href="#registro"
                   onClick={() => setOpen(false)}
-                  className="rounded bg-brand px-5 py-3 text-center text-display text-xs text-brand-foreground"
+                  className="rounded bg-brand px-5 py-3.5 text-center text-display text-xs text-brand-foreground"
                 >
                   {header.ctaLawyer}
                 </a>

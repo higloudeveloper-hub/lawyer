@@ -257,3 +257,14 @@
     transform: translateX(-50%);
   }
 }
+
+/* Mobile polish: tighter touch targets + safe-area for sticky CTA */
+@media (max-width: 639px) {
+  html {
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}

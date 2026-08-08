@@ -8,7 +8,7 @@ export function ChatWidget() {
   const { chat } = t;
 
   return (
-    <div className="fixed right-4 bottom-4 z-50 flex flex-col items-end gap-3 sm:right-6 sm:bottom-6">
+    <div className="fixed right-3 bottom-[5.75rem] z-50 flex flex-col items-end gap-3 sm:right-6 sm:bottom-6">
       {open && (
         <div className="w-[min(88vw,20rem)] overflow-hidden rounded-lg border border-border bg-card shadow-panel">
           <div className="flex items-center gap-3 bg-gradient-brand px-4 py-3">

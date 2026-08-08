@@ -12,6 +12,7 @@ import {
 } from "@/components/site/Sections";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { ChatWidget } from "@/components/site/ChatWidget";
+import { StickyMobileCta } from "@/components/site/StickyMobileCta";
 import { LocaleProvider } from "@/lib/locale";
 import { content } from "@/lib/content";
 
@@ -34,7 +35,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <LocaleProvider>
-      <div className="min-h-screen bg-background scroll-smooth">
+      <div className="min-h-screen bg-background scroll-smooth pb-[5.5rem] sm:pb-0">
         <SiteHeader />
         <main>
           <Hero />
@@ -48,6 +49,7 @@ function Index() {
         </main>
         <SiteFooter />
         <ChatWidget />
+        <StickyMobileCta />
       </div>
     </LocaleProvider>
   );
