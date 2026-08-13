@@ -4,16 +4,20 @@ import { Hero } from "@/components/site/Hero";
 import {
   AudiencePaths,
   Benefits,
-  ContactCta,
   HowItWorks,
+  LiveCases,
+  PracticeAreas,
+  PulseBand,
   Pricing,
   Resources,
   TrustStrip,
+  VerificationBand,
 } from "@/components/site/Sections";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { ChatWidget } from "@/components/site/ChatWidget";
 import { StickyMobileCta } from "@/components/site/StickyMobileCta";
-import { LocaleProvider } from "@/lib/locale";
+import { TopLawyers } from "@/components/site/TopLawyers";
+import { Contact } from "@/components/site/Contact";
 import { content } from "@/lib/content";
 
 const meta = content.es.meta;
@@ -34,23 +38,26 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <LocaleProvider>
-      <div className="min-h-screen bg-background scroll-smooth pb-[4.25rem] sm:pb-0">
-        <SiteHeader />
-        <main>
-          <Hero />
-          <TrustStrip />
-          <AudiencePaths />
-          <HowItWorks />
-          <Benefits />
-          <Pricing />
-          <Resources />
-          <ContactCta />
-        </main>
-        <SiteFooter />
-        <ChatWidget />
-        <StickyMobileCta />
-      </div>
-    </LocaleProvider>
+    <div className="min-h-screen bg-background scroll-smooth pb-[4.25rem] sm:pb-0">
+      <SiteHeader />
+      <main>
+        <Hero />
+        <TrustStrip />
+        <AudiencePaths />
+        <PracticeAreas />
+        <HowItWorks />
+        <VerificationBand />
+        <TopLawyers />
+        <PulseBand />
+        <LiveCases />
+        <Benefits />
+        <Pricing />
+        <Resources />
+        <Contact />
+      </main>
+      <SiteFooter />
+      <ChatWidget />
+      <StickyMobileCta />
+    </div>
   );
 }

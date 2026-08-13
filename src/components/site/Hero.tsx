@@ -1,96 +1,66 @@
-import { ArrowRight, Phone, Scale, UserRound, Star } from "lucide-react";
-import heroImage from "@/assets/hero-lawyer.jpg";
+import { useState, type FormEvent } from "react";
+import { ArrowRight, Phone } from "lucide-react";
+import heroImage from "@/assets/hero-office.jpg";
 import { useLocale } from "@/lib/locale";
+import { useLiveCount } from "@/lib/live-count";
+import { cn } from "@/lib/utils";
 import { Counter, Reveal } from "./Reveal";
+import { TrustpilotRating } from "./Trustpilot";
 
 export function Hero() {
   const { t } = useLocale();
   const { hero } = t;
 
   return (
-    <section id="inicio" className="relative isolate overflow-hidden bg-ink">
+    <section id="inicio" className="relative isolate min-h-[32rem] overflow-hidden bg-ink sm:min-h-[36rem] lg:min-h-[40rem]">
       <img
         src={heroImage}
         alt={hero.imageAlt}
         width={1408}
-        height={1008}
-        className="absolute inset-0 h-full w-full object-cover object-[82%_12%] opacity-90 contrast-[1.08] saturate-[1.08] sm:object-[75%_center] sm:opacity-95 md:object-[70%_center] md:opacity-100"
+        height={792}
+        className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
       />
-      {/* Desktop: side wash keeps lawyer visible on the right */}
-      <div className="absolute inset-0 hidden bg-[linear-gradient(100deg,oklch(0.12_0.01_20/0.96)_0%,oklch(0.12_0.01_20/0.82)_38%,oklch(0.12_0.01_20/0.12)_64%,oklch(0.12_0.01_20/0.55)_100%)] md:block" />
-      {/* Mobile: left text panel + soft bottom so lawyer stays on the right like the reference */}
-      <div className="absolute inset-0 bg-[linear-gradient(105deg,oklch(0.1_0.01_20/0.92)_0%,oklch(0.1_0.01_20/0.72)_42%,oklch(0.1_0.01_20/0.18)_68%,oklch(0.1_0.01_20/0.45)_100%)] md:hidden" />
-      <div className="absolute inset-x-0 bottom-0 h-2/5 bg-[linear-gradient(180deg,transparent,oklch(0.1_0.01_20/0.88))] md:hidden" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,oklch(0.23_0.055_255/0.92)_0%,oklch(0.23_0.055_255/0.62)_40%,oklch(0.23_0.04_255/0.18)_68%,oklch(0.23_0.04_255/0.08)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-[linear-gradient(180deg,transparent,oklch(0.23_0.055_255/0.4))] md:hidden" />
 
-      <div className="relative mx-auto grid max-w-7xl gap-6 px-4 pb-6 pt-10 sm:gap-10 sm:px-6 sm:py-16 lg:grid-cols-[minmax(0,1.15fr)_auto] lg:items-center lg:py-24">
-        <Reveal className="max-w-2xl">
-          <p className="text-display text-[0.62rem] tracking-[0.28em] text-brand sm:text-xs sm:tracking-[0.3em]">
+      <div className="relative mx-auto grid max-w-7xl gap-6 px-4 pb-8 pt-12 sm:gap-10 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1.15fr)_auto] lg:items-center lg:py-28">
+        <Reveal className="max-w-3xl">
+          <p className="text-kicker text-brand-foreground/70">
             {hero.label}
           </p>
-          <h1 className="mt-3 text-display text-[1.85rem] leading-[1.06] text-brand-foreground sm:mt-4 sm:text-5xl lg:text-6xl">
-            {hero.title}
-            <span className="mt-1.5 block text-brand sm:mt-2">{hero.titleAccent}</span>
+          <h1 className="mt-3 text-display leading-[1.12] text-brand-foreground sm:mt-4">
+            <span className="block whitespace-nowrap text-[clamp(1.2rem,3.4vw+0.55rem,2.85rem)]">
+              {hero.title}
+            </span>
+            <span className="mt-1 block text-[clamp(1.2rem,3.4vw+0.55rem,2.85rem)] sm:mt-1.5">
+              {hero.titleAccent}
+            </span>
           </h1>
-          <p className="mt-3 max-w-[20rem] text-[0.9rem] leading-relaxed text-brand-foreground/90 sm:mt-6 sm:max-w-md sm:text-base">
+          <p className="mt-3 max-w-[22rem] text-[0.95rem] leading-7 text-brand-foreground/92 sm:mt-6 sm:max-w-md sm:text-lg sm:leading-8">
             {hero.subtitle}
           </p>
 
-          <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:gap-3">
-            <a
-              href="#registro"
-              className="group inline-flex w-full items-center justify-center gap-2.5 rounded bg-brand px-5 py-3.5 text-display text-[0.7rem] text-brand-foreground shadow-brand transition-colors hover:bg-brand-dark sm:w-auto sm:gap-3 sm:px-7 sm:py-4 sm:text-sm"
-            >
-              <UserRound className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
-              <span className="min-w-0 text-center leading-tight">{hero.clientCta}</span>
-              <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
-            </a>
-            <a
-              href={t.phoneHref}
-              className="inline-flex w-full items-center justify-center gap-2.5 rounded border border-brand-foreground/35 bg-ink/50 px-5 py-3.5 text-display text-[0.7rem] text-brand-foreground backdrop-blur transition-colors hover:bg-brand-foreground/15 sm:hidden"
-            >
-              <Phone className="h-4 w-4 shrink-0" />
-              <span className="min-w-0 text-center leading-tight">{hero.callCta}</span>
-            </a>
-            <a
-              href="#registro"
-              className="hidden w-full items-center justify-center gap-3 rounded border border-brand-foreground/30 bg-brand-foreground/5 px-7 py-4 text-display text-sm text-brand-foreground backdrop-blur transition-colors hover:bg-brand-foreground/15 sm:inline-flex sm:w-auto"
-            >
-              <Scale className="h-4 w-4 shrink-0" />
-              <span className="min-w-0 text-center leading-tight">{hero.lawyerCta}</span>
-            </a>
-          </div>
+          <LiveOnline clientsLabel={hero.onlineClients} prosLabel={hero.onlinePros} />
 
-          {/* Desktop Trustpilot under CTAs */}
-          <div className="mt-8 hidden flex-wrap items-center gap-3 text-sm text-brand-foreground/85 sm:flex">
-            <span className="flex items-center gap-1.5 text-display text-xs text-emerald-400">
-              <Star className="h-3.5 w-3.5 fill-current" /> {hero.ratingLabel}
-            </span>
-            <span className="flex gap-0.5 text-emerald-400">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-current" />
-              ))}
-            </span>
-            <span className="text-display text-sm text-brand-foreground">{hero.ratingScore}</span>
-            <span className="text-xs">{hero.ratingCount}</span>
-          </div>
-        </Reveal>
+          <ZipSearch />
 
-        {/* Desktop stats panel */}
-        <Reveal
-          delay={180}
-          className="hidden w-full border border-brand/40 bg-ink/80 p-6 backdrop-blur sm:block lg:w-72"
-        >
-          <div className="grid grid-cols-2 gap-6 lg:grid-cols-1">
-            {hero.stats.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="text-display text-3xl text-brand">
-                  <Counter value={s.value} prefix={s.prefix} suffix={s.suffix} />
-                </p>
-                <p className="mt-1 text-display text-[0.6rem] leading-snug tracking-wider text-brand-foreground/85">
-                  {s.label}
-                </p>
-              </div>
-            ))}
+          <a
+            href={t.phoneHref}
+            className="mt-3 inline-flex items-center gap-1.5 text-ui text-[0.75rem] text-brand-foreground/70 transition-colors hover:text-brand-foreground sm:hidden"
+          >
+            <Phone className="h-3.5 w-3.5" />
+            {hero.callCta}
+          </a>
+
+          <div className="mt-8 hidden items-center gap-4 sm:flex">
+            <TrustpilotRating score={hero.ratingScore} count={hero.ratingCount} />
+            <span className="text-brand-foreground/30">·</span>
+            <a
+              href="/registro/abogado"
+              className="text-ui text-[0.75rem] text-brand-foreground/65 transition-colors hover:text-brand-foreground"
+            >
+              {hero.lawyerCta}
+            </a>
           </div>
         </Reveal>
 
@@ -103,27 +73,129 @@ export function Hero() {
                   <p className="text-display text-[1.05rem] leading-none text-brand">
                     <Counter value={s.value} prefix={s.prefix} suffix={s.suffix} />
                   </p>
-                  <p className="mt-1.5 whitespace-pre-line text-display text-[0.42rem] leading-[1.15] tracking-wider text-brand-foreground/85">
+                  <p className="mt-1.5 whitespace-pre-line text-ui text-[0.58rem] leading-snug text-brand-foreground/85">
                     {s.labelShort}
                   </p>
                 </div>
               ))}
             </div>
-            <div className="mt-3.5 flex flex-wrap items-center justify-center gap-1.5 border-t border-brand-foreground/10 pt-3 text-brand-foreground/85">
-              <span className="flex items-center gap-1 text-display text-[0.58rem] text-emerald-400">
-                <Star className="h-3 w-3 fill-current" /> {hero.ratingLabel}
-              </span>
-              <span className="flex gap-0.5 text-emerald-400">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-3 w-3 fill-current" />
-                ))}
-              </span>
-              <span className="text-display text-[0.75rem] text-brand-foreground">{hero.ratingScore}</span>
-              <span className="text-[0.62rem] text-brand-foreground/75">{hero.ratingCount}</span>
-            </div>
+            <TrustpilotRating
+              size="sm"
+              score={hero.ratingScore}
+              count={hero.ratingCount}
+              className="mt-3.5 justify-center border-t border-brand-foreground/10 pt-3"
+            />
+          </div>
+        </Reveal>
+
+        <Reveal
+          delay={180}
+          className="hidden w-full rounded-lg border border-border bg-card p-6 shadow-panel sm:block lg:w-72"
+        >
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-1">
+            {hero.stats.map((s) => (
+              <div key={s.label} className="text-center">
+                <p className="text-display text-3xl text-foreground">
+                  <Counter value={s.value} prefix={s.prefix} suffix={s.suffix} />
+                </p>
+                <p className="mt-1 text-ui text-[0.7rem] leading-snug text-muted-foreground">
+                  {s.label}
+                </p>
+              </div>
+            ))}
           </div>
         </Reveal>
       </div>
     </section>
+  );
+}
+
+function LiveDot() {
+  return (
+    <span className="relative grid h-1.5 w-1.5 place-items-center">
+      <span className="absolute inset-0 rounded-full bg-emerald-400/70 animate-livepulse" />
+      <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
+    </span>
+  );
+}
+
+function LiveCount({ value, label }: { value: number; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-2">
+      <LiveDot />
+      <span key={value} className="animate-onlineflick tabular-nums text-brand-foreground">
+        {value.toLocaleString("en-US")}
+      </span>
+      {label}
+    </span>
+  );
+}
+
+function LiveOnline({ clientsLabel, prosLabel }: { clientsLabel: string; prosLabel: string }) {
+  const clients = useLiveCount("clients");
+  const pros = useLiveCount("lawyers");
+
+  return (
+    <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-ui text-[0.75rem] text-brand-foreground/75 sm:mt-6">
+      <LiveCount value={clients} label={clientsLabel} />
+      <span className="text-brand-foreground/30">·</span>
+      <LiveCount value={pros} label={prosLabel} />
+    </p>
+  );
+}
+
+function ZipSearch() {
+  const { t } = useLocale();
+  const { hero } = t;
+  const [zip, setZip] = useState("");
+  const [error, setError] = useState(false);
+
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (zip.length !== 5) {
+      setError(true);
+      return;
+    }
+    window.location.assign(`/registro/cliente?zip=${zip}`);
+  };
+
+  return (
+    <form onSubmit={onSubmit} className="mt-6 max-w-md sm:mt-8">
+      <div
+        className={cn(
+          "flex items-stretch overflow-hidden rounded bg-card shadow-panel ring-1 ring-transparent transition-[box-shadow,ring-color]",
+          error ? "ring-destructive/50" : "focus-within:ring-brand/35",
+        )}
+      >
+        <label className="sr-only" htmlFor="hero-zip">
+          {hero.zipLabel}
+        </label>
+        <input
+          id="hero-zip"
+          name="zip"
+          type="text"
+          inputMode="numeric"
+          autoComplete="postal-code"
+          maxLength={5}
+          placeholder={hero.zipPlaceholder}
+          value={zip}
+          onChange={(event) => {
+            setZip(event.target.value.replace(/\D/g, "").slice(0, 5));
+            setError(false);
+          }}
+          className="min-w-0 flex-1 bg-transparent px-4 py-3.5 text-ui text-sm tracking-[0.12em] text-foreground outline-none placeholder:tracking-normal placeholder:text-muted-foreground sm:px-5 sm:py-4"
+        />
+        <button
+          type="submit"
+          className="inline-flex shrink-0 items-center gap-1.5 bg-brand px-4 text-ui text-[0.75rem] text-brand-foreground transition-colors hover:bg-brand-dark sm:px-5"
+        >
+          {hero.zipSearch}
+          <ArrowRight className="h-3.5 w-3.5" />
+        </button>
+      </div>
+      <p className={cn("mt-2.5 text-xs", error ? "text-red-300" : "text-brand-foreground/70")}>
+        {error ? hero.zipError : hero.zipHint}
+      </p>
+    </form>
   );
 }

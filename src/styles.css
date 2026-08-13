@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-display: "Oswald", ui-sans-serif, sans-serif;
+  --font-display: "Source Serif 4", "Source Serif", ui-serif, Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -75,40 +75,40 @@
 :root {
   --radius: 0.25rem;
 
-  /* Brand red */
-  --brand: oklch(0.58 0.23 27);
-  --brand-foreground: oklch(0.98 0.01 20);
-  --brand-dark: oklch(0.44 0.2 27);
+  /* Brand — CTA blue only. Clear, not dusty. Not teal. */
+  --brand: oklch(0.47 0.15 255);
+  --brand-foreground: oklch(0.99 0.004 250);
+  --brand-dark: oklch(0.38 0.13 255);
 
-  /* Ink / dark surfaces */
-  --ink: oklch(0.16 0.012 20);
-  --ink-soft: oklch(0.23 0.014 20);
-  --surface: oklch(0.97 0.004 60);
+  /* Ink — navy for large dark bands. Same hue, not gray-mud. */
+  --ink: oklch(0.23 0.055 255);
+  --ink-soft: oklch(0.29 0.05 255);
+  --surface: oklch(0.975 0.006 250);
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.18 0.012 20);
+  --background: oklch(0.995 0.002 250);
+  --foreground: oklch(0.22 0.04 255);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.012 20);
+  --card-foreground: oklch(0.22 0.04 255);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.012 20);
-  --primary: oklch(0.5 0.2 27);
-  --primary-foreground: oklch(0.98 0.01 20);
-  --secondary: oklch(0.16 0.012 20);
-  --secondary-foreground: oklch(0.98 0.005 60);
-  --muted: oklch(0.96 0.004 60);
-  --muted-foreground: oklch(0.42 0.015 30);
-  --accent: oklch(0.95 0.02 25);
-  --accent-foreground: oklch(0.36 0.16 27);
+  --popover-foreground: oklch(0.22 0.04 255);
+  --primary: oklch(0.47 0.15 255);
+  --primary-foreground: oklch(0.99 0.004 250);
+  --secondary: oklch(0.23 0.055 255);
+  --secondary-foreground: oklch(0.99 0.004 250);
+  --muted: oklch(0.965 0.006 250);
+  --muted-foreground: oklch(0.42 0.02 255);
+  --accent: oklch(0.96 0.02 255);
+  --accent-foreground: oklch(0.32 0.10 255);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.9 0.008 40);
-  --input: oklch(0.9 0.008 40);
-  --ring: oklch(0.5 0.2 27);
+  --border: oklch(0.90 0.012 250);
+  --input: oklch(0.91 0.01 250);
+  --ring: oklch(0.47 0.14 255);
 
   --gradient-brand: linear-gradient(135deg, var(--brand-dark), var(--brand));
-  --gradient-ink: linear-gradient(180deg, oklch(0.13 0.01 20), oklch(0.2 0.02 25));
-  --shadow-brand: 0 18px 40px -18px color-mix(in oklab, var(--brand) 55%, transparent);
-  --shadow-panel: 0 24px 60px -24px oklch(0 0 0 / 0.45);
+  --gradient-ink: linear-gradient(180deg, oklch(0.26 0.06 255), oklch(0.32 0.05 255));
+  --shadow-brand: 0 18px 40px -18px color-mix(in oklab, var(--brand) 45%, transparent);
+  --shadow-panel: 0 18px 40px -22px oklch(0.22 0.04 255 / 0.14);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -175,9 +175,10 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-smooth: always;
     text-rendering: optimizeLegibility;
     font-kerning: normal;
     font-optical-sizing: auto;
@@ -190,16 +191,17 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    letter-spacing: 0.01em;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
     text-wrap: balance;
-    font-feature-settings: "kern" 1, "liga" 1;
-    text-rendering: geometricPrecision;
     font-optical-sizing: auto;
-    font-variant-ligatures: common-ligatures;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
 
   p {
     text-wrap: pretty;
+    line-height: 1.65;
     font-variant-numeric: proportional-nums;
   }
 
@@ -221,12 +223,27 @@
 
 @utility text-display {
   font-family: var(--font-display);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  text-rendering: geometricPrecision;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@utility text-kicker {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@utility text-ui {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 @utility bg-gradient-brand {
@@ -258,10 +275,523 @@
   }
 }
 
+@keyframes kenburns {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(-1.4%, 1%, 0);
+  }
+}
+
+@keyframes livepulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 oklch(0.75 0.16 155 / 0.45);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 0 6px oklch(0.75 0.16 155 / 0);
+  }
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes chatpop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.7;
+  }
+  92% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(14rem);
+    opacity: 0;
+  }
+}
+
+@keyframes licensescan {
+  0% {
+    transform: translateY(-40%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(280%);
+    opacity: 0;
+  }
+}
+
+@keyframes shutterflash {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.88;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes stampslam {
+  0% {
+    opacity: 0;
+    transform: scale(1.45) rotate(-18deg);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(0.94) rotate(-12deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-12deg);
+  }
+}
+
+@keyframes stripein {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes stripeout {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+}
+
+@keyframes holoshift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes stampin {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes typecaret {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes meshpulse {
+  0%,
+  100% {
+    opacity: 0.28;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes logrow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes beam {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes typingdot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes creditflash {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  25% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes connectpulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleX(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes ctapulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 oklch(0.47 0.15 255 / 0.30);
+  }
+  70% {
+    box-shadow: 0 0 0 8px oklch(0.47 0.15 255 / 0);
+  }
+}
+
+@keyframes paperin {
+  from {
+    opacity: 0;
+    transform: translateX(-1.75rem) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes earnpop {
+  0% {
+    transform: scale(0.88);
+  }
+  55% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes toastin {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes leadin {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes queuein {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bellpop {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  30% {
+    transform: scale(1.2) rotate(-12deg);
+  }
+  60% {
+    transform: scale(1.1) rotate(8deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes onlineflick {
+  from {
+    opacity: 0.4;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes truststar {
+  0% {
+    opacity: 0;
+    transform: scale(0.55) rotate(-12deg);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.08) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes barquery {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes deskflash {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  35% {
+    box-shadow: 0 0 0 3px oklch(0.47 0.15 255 / 0.22);
+  }
+}
+
+@utility animate-kenburns {
+  animation: kenburns 24s ease-out forwards;
+}
+
+@utility animate-livepulse {
+  animation: livepulse 1.8s ease-in-out infinite;
+}
+
+@utility animate-floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+
+@utility animate-chatpop {
+  animation: chatpop 0.35s ease-out both;
+}
+
+@utility animate-scanline {
+  animation: scanline 2.6s ease-in-out infinite;
+}
+
+@utility animate-licensescan {
+  animation: licensescan 2.2s ease-in-out 1;
+}
+
+@utility animate-shutterflash {
+  animation: shutterflash 0.42s ease-out both;
+}
+
+@utility animate-stampslam {
+  animation: stampslam 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@utility animate-holoshift {
+  animation: holoshift 2.4s linear infinite;
+}
+
+@utility animate-stripein {
+  animation: stripein 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@utility animate-stripeout {
+  animation: stripeout 0.38s ease-in both;
+}
+
+@utility animate-stampin {
+  animation: stampin 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@utility animate-typecaret {
+  animation: typecaret 0.9s step-end infinite;
+}
+
+@utility animate-meshpulse {
+  animation: meshpulse 1.6s ease-in-out infinite;
+}
+
+@utility animate-logrow {
+  animation: logrow 0.35s ease-out both;
+}
+
+@utility animate-beam {
+  animation: beam 1.4s ease-in-out infinite;
+}
+
+@utility animate-creditflash {
+  animation: creditflash 1.4s ease-out both;
+}
+
+@utility animate-connectpulse {
+  animation: connectpulse 1.6s ease-in-out infinite;
+}
+
+@utility animate-ctapulse {
+  animation: ctapulse 1.6s ease-out infinite;
+}
+
+@utility animate-paperin {
+  animation: paperin 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@utility animate-earnpop {
+  animation: earnpop 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@utility animate-toastin {
+  animation: toastin 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@utility animate-leadin {
+  animation: leadin 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@utility animate-queuein {
+  animation: queuein 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@utility animate-bellpop {
+  animation: bellpop 0.55s ease-out both;
+}
+
+@utility animate-deskflash {
+  animation: deskflash 1.2s ease-out both;
+}
+
+@utility animate-barquery {
+  animation: barquery 2.2s ease-out both;
+}
+
+@utility animate-truststar {
+  animation: truststar 0.48s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@utility animate-onlineflick {
+  animation: onlineflick 0.28s ease-out both;
+}
+
+@utility hover-lift {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+@utility hover-lift-on {
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-panel);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .animate-kenburns,
+  .animate-livepulse,
+  .animate-floaty,
+  .animate-chatpop,
+  .animate-scanline,
+  .animate-licensescan,
+  .animate-shutterflash,
+  .animate-stampslam,
+  .animate-holoshift,
+  .animate-stripein,
+  .animate-stripeout,
+  .animate-stampin,
+  .animate-typecaret,
+  .animate-meshpulse,
+  .animate-logrow,
+  .animate-beam,
+  .animate-creditflash,
+  .animate-connectpulse,
+  .animate-ctapulse,
+  .animate-paperin,
+  .animate-earnpop,
+  .animate-toastin,
+  .animate-leadin,
+  .animate-queuein,
+  .animate-bellpop,
+  .animate-deskflash,
+  .animate-barquery,
+  .animate-truststar,
+  .animate-onlineflick {
+    animation: none !important;
+  }
+
+  i[style*="typingdot"] {
+    animation: none !important;
+  }
+}
+
 /* Mobile polish: tighter touch targets + safe-area for sticky CTA */
 @media (max-width: 639px) {
   html {
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 4.5rem;
   }
 
   body {

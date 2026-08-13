@@ -23,7 +23,7 @@ function useInView<T extends HTMLElement>(once = true) {
           }
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0.14, rootMargin: "0px 0px -6% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -37,9 +37,17 @@ type RevealProps = {
   className?: string;
   delay?: number;
   as?: "div" | "li" | "section" | "span" | "p" | "h2";
+  variant?: "up" | "left" | "right" | "scale";
 };
 
-export function Reveal({ children, className, delay = 0, as = "div" }: RevealProps) {
+const hidden = {
+  up: "translate-y-7 opacity-0",
+  left: "-translate-x-7 opacity-0",
+  right: "translate-x-7 opacity-0",
+  scale: "scale-[0.97] opacity-0",
+};
+
+export function Reveal({ children, className, delay = 0, as = "div", variant = "up" }: RevealProps) {
   const { ref, inView } = useInView<HTMLElement>();
   const Tag = as as "div";
 
@@ -48,8 +56,8 @@ export function Reveal({ children, className, delay = 0, as = "div" }: RevealPro
       ref={ref as never}
       style={{ transitionDelay: `${delay}ms` }}
       className={cn(
-        "translate-y-5 opacity-0 transition-[opacity,transform] duration-500 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100",
-        inView && "translate-y-0 opacity-100",
+        "transition-[opacity,transform] duration-700 ease-out motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:opacity-100",
+        inView ? "translate-x-0 translate-y-0 scale-100 opacity-100" : hidden[variant],
         className,
       )}
     >

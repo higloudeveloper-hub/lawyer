@@ -1,40 +1,50 @@
 import { useState } from "react";
-import { MessageSquare, Minus, Paperclip, Send, X } from "lucide-react";
+import { MessageSquare, Paperclip, Send, X } from "lucide-react";
 import { useLocale } from "@/lib/locale";
+import { useLiveCount } from "@/lib/live-count";
 
 export function ChatWidget() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
+  const lawyers = useLiveCount("lawyers");
   const { t } = useLocale();
   const { chat } = t;
 
   return (
-    <div className="fixed right-3 bottom-[4.5rem] z-50 flex flex-col items-end gap-3 sm:right-6 sm:bottom-6">
-      {open && (
-        <div className="w-[min(88vw,20rem)] overflow-hidden rounded-lg border border-border bg-card shadow-panel">
-          <div className="flex items-center gap-3 bg-gradient-brand px-4 py-3">
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-ink text-display text-[0.5rem] leading-none text-brand-foreground">
+    <div className="fixed right-3 bottom-[4.75rem] z-50 sm:right-6 sm:bottom-6">
+      {open ? (
+        <div className="animate-chatpop w-[min(calc(100vw-1.5rem),20rem)] overflow-hidden rounded-lg border border-border bg-card shadow-panel">
+          <div className="flex items-center gap-3 bg-ink px-4 py-3">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand text-ui text-[0.5rem] leading-none text-brand-foreground">
               D2
               <br />
               LE2
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-display text-sm text-brand-foreground">
+              <span className="block truncate text-display text-base text-brand-foreground">
                 D2LE2 Law
               </span>
-              <span className="flex items-center gap-1.5 text-[0.7rem] text-brand-foreground/85">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> {chat.online}
+              <span className="mt-0.5 flex items-center gap-1.5 text-[0.7rem] text-brand-foreground/80">
+                <span className="relative grid h-1.5 w-1.5 place-items-center">
+                  <span className="absolute inset-0 rounded-full bg-emerald-400/70 animate-livepulse" />
+                  <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                </span>
+                <span key={lawyers} className="animate-onlineflick tabular-nums text-brand-foreground">
+                  {lawyers.toLocaleString("en-US")}
+                </span>
+                {chat.lawyersOnline}
               </span>
             </span>
             <button
+              type="button"
               onClick={() => setOpen(false)}
-              aria-label={chat.minimize}
+              aria-label={chat.close}
               className="shrink-0 rounded p-1 text-brand-foreground/90 transition-colors hover:bg-brand-foreground/15"
             >
-              <Minus className="h-4 w-4" />
+              <X className="h-4 w-4" />
             </button>
           </div>
 
-          <div className="flex max-h-[22rem] flex-col gap-3 overflow-y-auto bg-muted/60 p-4">
+          <div className="flex max-h-[min(22rem,50vh)] flex-col gap-3 overflow-y-auto bg-muted/60 p-4">
             {chat.messages.map((m, i) => (
               <div key={i} className={m.from === "me" ? "flex justify-end" : "flex justify-start"}>
                 <div
@@ -80,15 +90,16 @@ export function ChatWidget() {
             </button>
           </form>
         </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label={chat.open}
+          className="grid h-14 w-14 place-items-center rounded-full bg-brand text-brand-foreground shadow-brand transition-transform hover:scale-105"
+        >
+          <MessageSquare className="h-6 w-6" />
+        </button>
       )}
-
-      <button
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? chat.close : chat.open}
-        className="grid h-14 w-14 place-items-center rounded-full bg-brand text-brand-foreground shadow-brand transition-transform hover:scale-105"
-      >
-        {open ? <X className="h-6 w-6" /> : <MessageSquare className="h-6 w-6" />}
-      </button>
     </div>
   );
 }

@@ -10,33 +10,64 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RegistroIndexRouteImport } from './routes/registro/index'
+import { Route as RegistroAbogadoRouteImport } from './routes/registro/abogado'
+import { Route as RegistroClienteRouteImport } from './routes/registro/cliente'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegistroIndexRoute = RegistroIndexRouteImport.update({
+  id: '/registro/',
+  path: '/registro/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistroAbogadoRoute = RegistroAbogadoRouteImport.update({
+  id: '/registro/abogado',
+  path: '/registro/abogado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistroClienteRoute = RegistroClienteRouteImport.update({
+  id: '/registro/cliente',
+  path: '/registro/cliente',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/registro/abogado': typeof RegistroAbogadoRoute
+  '/registro/cliente': typeof RegistroClienteRoute
+  '/registro/': typeof RegistroIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/registro/abogado': typeof RegistroAbogadoRoute
+  '/registro/cliente': typeof RegistroClienteRoute
+  '/registro': typeof RegistroIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/registro/abogado': typeof RegistroAbogadoRoute
+  '/registro/cliente': typeof RegistroClienteRoute
+  '/registro/': typeof RegistroIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/registro/abogado' | '/registro/cliente' | '/registro/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/registro/abogado' | '/registro/cliente' | '/registro'
+  id:
+    '__root__' | '/' | '/registro/abogado' | '/registro/cliente' | '/registro/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RegistroAbogadoRoute: typeof RegistroAbogadoRoute
+  RegistroClienteRoute: typeof RegistroClienteRoute
+  RegistroIndexRoute: typeof RegistroIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +79,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/registro/': {
+      id: '/registro/'
+      path: '/registro'
+      fullPath: '/registro/'
+      preLoaderRoute: typeof RegistroIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registro/abogado': {
+      id: '/registro/abogado'
+      path: '/registro/abogado'
+      fullPath: '/registro/abogado'
+      preLoaderRoute: typeof RegistroAbogadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registro/cliente': {
+      id: '/registro/cliente'
+      path: '/registro/cliente'
+      fullPath: '/registro/cliente'
+      preLoaderRoute: typeof RegistroClienteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RegistroAbogadoRoute: RegistroAbogadoRoute,
+  RegistroClienteRoute: RegistroClienteRoute,
+  RegistroIndexRoute: RegistroIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
