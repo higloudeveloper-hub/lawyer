@@ -802,7 +802,9 @@
   .animate-barquery,
   .animate-sheetup,
   .animate-truststar,
-  .animate-onlineflick {
+  .animate-onlineflick,
+  .m-rise,
+  .m-ticker {
     animation: none !important;
   }
 
@@ -847,5 +849,24 @@
   textarea,
   select {
     font-size: 16px;
+  }
+
+  @keyframes apprise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .m-rise {
+    animation: apprise 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .m-ticker {
+    animation: marquee 22s linear infinite;
   }
 }

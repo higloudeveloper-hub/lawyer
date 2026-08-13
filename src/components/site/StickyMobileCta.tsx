@@ -112,7 +112,7 @@ export function StickyMobileCta() {
         </div>
       )}
 
-      <nav className="fixed inset-x-0 bottom-0 z-50 bg-brand pb-[env(safe-area-inset-bottom)]">
+      <nav className="fixed inset-x-0 bottom-0 z-50 bg-brand pb-[env(safe-area-inset-bottom)] shadow-[0_-12px_32px_-16px_oklch(0.47_0.15_255/0.55)]">
         <div className="flex items-center px-2 py-2">
           <button
             type="button"
@@ -123,7 +123,7 @@ export function StickyMobileCta() {
             <MessageSquare className="h-5 w-5" strokeWidth={1.75} />
           </button>
           <a href="/registro" className="flex min-w-0 flex-1 flex-col items-center py-1 text-brand-foreground">
-            <span className="flex items-center gap-1.5 text-ui text-[0.95rem]">
+            <span className="flex items-center gap-1.5 text-ui text-[1rem]">
               <Sparkles className="h-4 w-4" strokeWidth={1.75} />
               {t.app.start}
               <ArrowRight className="h-4 w-4" />

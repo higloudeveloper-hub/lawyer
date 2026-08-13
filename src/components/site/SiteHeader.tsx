@@ -60,16 +60,21 @@ export function SiteHeader() {
         className="absolute inset-x-0 bottom-0 z-10 hidden h-[2px] origin-left bg-brand sm:block"
         style={{ transform: `scaleX(${progress})` }}
       />
-      <div className="flex items-center justify-between gap-2 bg-ink px-3 py-1.5 sm:hidden">
-        {app.ticker.map((item, i) => {
-          const Icon = tickerIcons[i] ?? Zap;
-          return (
-            <p key={item} className="flex min-w-0 items-center gap-1 text-[0.52rem] font-semibold uppercase tracking-wide text-brand-foreground/90">
-              <Icon className="h-2.5 w-2.5 shrink-0 text-brand" strokeWidth={2} />
-              <span className="truncate">{item}</span>
-            </p>
-          );
-        })}
+      <div className="overflow-hidden bg-ink sm:hidden">
+        <div className="m-ticker flex w-max gap-6 px-3 py-1.5">
+          {[...app.ticker, ...app.ticker].map((item, i) => {
+            const Icon = tickerIcons[i % tickerIcons.length] ?? Zap;
+            return (
+              <p
+                key={`${item}-${i}`}
+                className="flex shrink-0 items-center gap-1.5 text-[0.58rem] font-semibold uppercase tracking-wide text-brand-foreground/90"
+              >
+                <Icon className="h-2.5 w-2.5 shrink-0 text-brand" strokeWidth={2} />
+                {item}
+              </p>
+            );
+          })}
+        </div>
       </div>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-3 sm:px-6">
         <Logo compact className="hidden min-w-0 sm:flex" />
@@ -249,12 +254,12 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           <a
             href="/registro/cliente"
             onClick={onClose}
-            className="relative overflow-hidden rounded-3xl bg-ink px-5 py-5 text-brand-foreground shadow-panel"
+            className="relative overflow-hidden rounded-3xl bg-ink px-5 py-5 text-brand-foreground shadow-panel before:absolute before:-right-8 before:-top-8 before:h-28 before:w-28 before:rounded-full before:bg-brand/25"
           >
-            <span className="inline-flex rounded-full bg-brand px-2.5 py-0.5 text-[0.6rem] font-semibold tracking-wide">
+            <span className="relative z-10 inline-flex rounded-full bg-brand px-2.5 py-0.5 text-[0.6rem] font-semibold tracking-wide">
               {app.free}
             </span>
-            <span className="mt-3 flex items-end justify-between gap-3">
+            <span className="relative z-10 mt-3 flex items-end justify-between gap-3">
               <span>
                 <span className="flex items-center gap-2 text-display text-[1.55rem] leading-none">
                   <Users className="h-5 w-5 text-brand" strokeWidth={1.6} />
