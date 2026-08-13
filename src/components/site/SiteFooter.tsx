@@ -6,7 +6,7 @@ export function SiteFooter() {
   const { footer } = t;
 
   return (
-    <footer id="aviso-legal" className="border-t border-brand-foreground/10 bg-ink py-12">
+    <footer id="aviso-legal" className="border-t border-brand-foreground/10 bg-ink py-12 max-sm:hidden">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.4fr)_repeat(2,minmax(0,1fr))]">
         <div>
           <Logo onDark />

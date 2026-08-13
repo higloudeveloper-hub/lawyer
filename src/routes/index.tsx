@@ -20,6 +20,7 @@ import { ChatWidget } from "@/components/site/ChatWidget";
 import { StickyMobileCta } from "@/components/site/StickyMobileCta";
 import { TopLawyers } from "@/components/site/TopLawyers";
 import { Contact } from "@/components/site/Contact";
+import { MobileHome } from "@/components/site/MobileHome";
 import { content } from "@/lib/content";
 
 const meta = content.es.meta;
@@ -43,23 +44,28 @@ function Index() {
     <div className="min-h-screen bg-background scroll-smooth pb-[calc(5.75rem+env(safe-area-inset-bottom))] sm:pb-0">
       <SiteHeader />
       <main>
-        <Hero />
-        <TrustStrip />
-        <ClientNeed />
-        <AudiencePaths />
-        <PracticeAreas />
-        <HowItWorks />
-        <VerificationBand />
-        <TopLawyers />
-        <PulseBand />
-        <CaseBoard />
-        <LiveCases />
-        <Benefits />
-        <Pricing />
-        <Resources />
-        <Contact />
+        <MobileHome />
+        <div className="hidden sm:contents">
+          <Hero />
+          <TrustStrip />
+          <ClientNeed />
+          <AudiencePaths />
+          <PracticeAreas />
+          <HowItWorks />
+          <VerificationBand />
+          <TopLawyers />
+          <PulseBand />
+          <CaseBoard />
+          <LiveCases />
+          <Benefits />
+          <Pricing />
+          <Resources />
+          <Contact />
+        </div>
       </main>
-      <SiteFooter />
+      <div className="hidden sm:block">
+        <SiteFooter />
+      </div>
       <div className="hidden sm:contents">
         <ChatWidget />
       </div>

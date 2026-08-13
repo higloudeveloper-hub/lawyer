@@ -177,15 +177,7 @@ export function PulseDesk() {
           </button>
         </Reveal>
 
-        <div ref={ref} className="relative mt-8 grid items-stretch gap-4 sm:mt-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-5">
-          {phase === "send" && (
-            <span
-              aria-hidden
-              className="animate-paperin pointer-events-none absolute top-[42%] left-[28%] z-10 hidden rounded border border-brand/30 bg-card px-3 py-2 text-xs text-foreground shadow-panel lg:block"
-            >
-              {person.title}
-            </span>
-          )}
+        <div ref={ref} className="mt-8 grid items-stretch gap-4 sm:mt-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-5">
           <ClientDesk
             pulse={pulse}
             person={person}
@@ -247,10 +239,10 @@ function ClientDesk({
         </span>
       </header>
 
-      <div className="flex flex-1 flex-col gap-4 p-4">
+      <div className="flex flex-1 flex-col gap-4 overflow-hidden p-4">
         <div
           className={cn(
-            "rounded-md border bg-surface p-4 transition-colors duration-300",
+            "shrink-0 rounded-md border bg-surface p-4 transition-colors duration-300",
             sending ? "border-brand/40" : "border-border",
           )}
         >
@@ -268,7 +260,7 @@ function ClientDesk({
 
           <label className="mt-4 block">
             <span className="text-[0.65rem] text-muted-foreground">{pulse.fieldArea}</span>
-            <p className="mt-1 min-h-[1.35rem] text-sm text-foreground">
+            <p className="mt-1 min-h-[2.75rem] text-sm leading-snug text-foreground">
               {title}
               {writing && <span className="animate-typecaret ml-0.5 text-brand">|</span>}
             </p>
@@ -289,16 +281,16 @@ function ClientDesk({
           </div>
         </div>
 
-        <div className="min-h-0 flex-1">
+        <div className="min-h-0 flex-1 overflow-y-auto">
           <p className="text-[0.65rem] text-muted-foreground">{pulse.queue}</p>
           {queued.length === 0 ? (
             <p className="mt-3 text-sm text-muted-foreground">{pulse.emptyQueue}</p>
           ) : (
-            <ul className="mt-2 space-y-2">
+            <ul className="relative mt-2 space-y-2">
               {queued.map((item) => (
                 <li
                   key={item.name}
-                  className="animate-queuein flex items-center justify-between gap-3 rounded-md border border-border bg-card px-3 py-2"
+                  className="relative flex items-center justify-between gap-3 rounded-md border border-border bg-card px-3 py-2"
                 >
                   <div className="min-w-0">
                     <p className="truncate text-sm text-foreground">{item.name}</p>
@@ -359,24 +351,23 @@ function LawyerDesk({
         </span>
       </header>
 
-      {toast && (
-        <div className="animate-toastin absolute left-3 right-3 top-14 z-10 rounded-md border border-border bg-card px-3 py-2.5 shadow-panel">
-          <p className="text-[0.65rem] text-brand">{pulse.toastTitle}</p>
-          <p className="mt-0.5 text-sm text-foreground">{toast.title}</p>
-          <p className="mt-0.5 text-xs text-muted-foreground">
-            {toast.hidden} · {pulse.hidden}
-          </p>
-        </div>
-      )}
-
-      <div className="flex flex-1 flex-col p-3">
-        <p className="mb-2 text-[0.65rem] text-muted-foreground">{pulse.lawyerDesk}</p>
-        {feed.length === 0 ? (
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden p-3">
+        <p className="mb-2 shrink-0 text-[0.65rem] text-muted-foreground">{pulse.lawyerDesk}</p>
+        {toast && (
+          <div className="mb-2 shrink-0 rounded-md border border-brand/25 bg-card px-3 py-2.5">
+            <p className="text-[0.65rem] text-brand">{pulse.toastTitle}</p>
+            <p className="mt-0.5 text-sm text-foreground">{toast.title}</p>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              {toast.hidden} · {pulse.hidden}
+            </p>
+          </div>
+        )}
+        {feed.length === 0 && !toast ? (
           <p className="mt-6 text-center text-sm text-muted-foreground">{pulse.emptyFeed}</p>
         ) : (
-          <ul className="space-y-2">
+          <ul className="min-h-0 space-y-2 overflow-y-auto">
             {[...feed].reverse().map((item) => (
-              <li key={item.name} className="animate-leadin rounded-md border border-border bg-surface px-3 py-2.5">
+              <li key={item.name} className="rounded-md border border-border bg-surface px-3 py-2.5">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-[0.65rem] text-brand">{pulse.fresh}</span>
                   <span className="text-[0.65rem] text-muted-foreground">{pulse.cost}</span>
