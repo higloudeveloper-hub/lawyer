@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useLocale } from "@/lib/locale";
+import { useActiveSection } from "@/lib/use-active-section";
 import { Logo } from "./Logo";
 import { cn } from "@/lib/utils";
 
@@ -8,13 +9,67 @@ const primaryHrefs = ["#como-funciona", "#verificacion", "#abogados", "#precios"
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const lastY = useRef(0);
+  const active = useActiveSection(primaryHrefs);
   const { locale, setLocale, t } = useLocale();
   const { header } = t;
   const primary = header.nav.filter((item) => primaryHrefs.includes(item.href));
 
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const y = window.scrollY;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        setScrolled(y > 12);
+        setProgress(max > 0 ? Math.min(1, y / max) : 0);
+        if (window.innerWidth < 640) {
+          const goingDown = y > lastY.current + 6;
+          const goingUp = y < lastY.current - 4;
+          if (goingDown && y > 64) setHidden(true);
+          if (goingUp || y < 48) setHidden(false);
+        } else {
+          setHidden(false);
+        }
+        lastY.current = y;
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!open || window.innerWidth >= 640) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-border/80 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6">
+    <header
+      className={cn(
+        "sticky top-0 z-40 border-b bg-background/80 pt-[env(safe-area-inset-top)] backdrop-blur-md transition-[border-color,box-shadow,transform] duration-300",
+        scrolled ? "border-border shadow-[0_8px_24px_-18px_oklch(0.22_0.04_255/0.35)]" : "border-border/60",
+        hidden && !open && "max-sm:-translate-y-full",
+      )}
+    >
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 z-10 h-[2px] origin-left bg-brand"
+        style={{ transform: `scaleX(${progress})` }}
+      />
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-6 px-4 sm:h-16 sm:px-6">
         <Logo compact className="min-w-0" />
 
         <nav className="hidden items-center gap-8 lg:flex">
@@ -22,9 +77,19 @@ export function SiteHeader() {
             <a
               key={item.href}
               href={item.href}
-              className="text-ui text-[0.8rem] text-muted-foreground transition-colors hover:text-foreground"
+              className={cn(
+                "relative text-ui text-[0.8rem] transition-colors",
+                active === item.href ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+              )}
             >
               {item.label}
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute inset-x-0 -bottom-1 h-px bg-brand transition-opacity duration-300",
+                  active === item.href ? "opacity-100" : "opacity-0",
+                )}
+              />
             </a>
           ))}
         </nav>
@@ -71,7 +136,7 @@ export function SiteHeader() {
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-label={header.menuOpen}
-            className="p-1 text-foreground lg:hidden"
+            className="grid h-11 w-11 place-items-center text-foreground sm:h-auto sm:w-auto sm:p-1 lg:hidden"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -79,14 +144,17 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-border bg-background lg:hidden">
-          <nav className="mx-auto flex max-w-7xl flex-col px-4 py-2 sm:px-6">
+        <div className="border-t border-border bg-background max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:top-[calc(env(safe-area-inset-top)+3.5rem)] max-sm:z-40 max-sm:overflow-y-auto max-sm:border-0 max-sm:bg-background/96 max-sm:backdrop-blur-xl lg:hidden">
+          <nav className="mx-auto flex max-w-7xl flex-col px-4 py-2 pb-[calc(5.25rem+env(safe-area-inset-bottom))] sm:px-6 sm:pb-4">
             {header.nav.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="border-b border-border/70 py-3.5 text-ui text-sm text-foreground/80 transition-colors hover:text-foreground"
+                className={cn(
+                  "border-b border-border/70 py-3.5 text-ui text-sm transition-colors max-sm:py-4 max-sm:text-base",
+                  active === item.href ? "text-foreground" : "text-foreground/80 hover:text-foreground",
+                )}
               >
                 {item.label}
               </a>
@@ -96,7 +164,7 @@ export function SiteHeader() {
                 type="button"
                 onClick={() => setLocale("es")}
                 className={cn(
-                  "text-ui text-xs",
+                  "min-h-11 px-2 text-ui text-sm",
                   locale === "es" ? "text-foreground" : "text-muted-foreground",
                 )}
               >
@@ -107,7 +175,7 @@ export function SiteHeader() {
                 type="button"
                 onClick={() => setLocale("en")}
                 className={cn(
-                  "text-ui text-xs",
+                  "min-h-11 px-2 text-ui text-sm",
                   locale === "en" ? "text-foreground" : "text-muted-foreground",
                 )}
               >
@@ -118,14 +186,14 @@ export function SiteHeader() {
               <a
                 href="/registro/abogado"
                 onClick={() => setOpen(false)}
-                className="py-3 text-center text-ui text-xs text-muted-foreground"
+                className="py-3 text-center text-ui text-xs text-muted-foreground max-sm:min-h-11 max-sm:text-sm"
               >
                 {header.ctaLawyer}
               </a>
               <a
                 href="/registro/cliente"
                 onClick={() => setOpen(false)}
-                className="rounded bg-brand px-5 py-3 text-center text-ui text-xs text-brand-foreground"
+                className="rounded bg-brand px-5 py-3 text-center text-ui text-xs text-brand-foreground max-sm:rounded-full max-sm:text-sm"
               >
                 {header.ctaClient}
               </a>

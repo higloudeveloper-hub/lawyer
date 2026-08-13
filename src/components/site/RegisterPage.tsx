@@ -10,7 +10,7 @@ export function RegisterShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-ink text-brand-foreground">
-      <header className="border-b border-brand-foreground/10">
+      <header className="border-b border-brand-foreground/10 pt-[env(safe-area-inset-top)]">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <Logo href="/" onDark />
           <div className="flex items-center gap-3">
@@ -71,7 +71,7 @@ export function RegisterPicker() {
       <div className="mt-10 grid gap-4 lg:grid-cols-2">
         <Link
           to="/registro/cliente"
-          className="group flex h-full flex-col items-start rounded border border-brand-foreground/15 bg-brand-foreground/[0.04] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/50 sm:p-8"
+          className="group flex h-full flex-col items-start rounded border border-brand/50 bg-brand/15 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand sm:p-8"
         >
           <UserRound className="h-6 w-6 text-brand" strokeWidth={1.5} />
           <h2 className="mt-5 text-display text-xl text-brand-foreground">{register.clientCard.title}</h2>
@@ -83,7 +83,7 @@ export function RegisterPicker() {
         </Link>
         <Link
           to="/registro/abogado"
-          className="group flex h-full flex-col items-start rounded border border-brand/40 bg-brand/10 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand sm:p-8"
+          className="group flex h-full flex-col items-start rounded border border-brand-foreground/15 bg-brand-foreground/[0.04] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/50 sm:p-8"
         >
           <Scale className="h-6 w-6 text-brand" strokeWidth={1.5} />
           <h2 className="mt-5 text-display text-xl text-brand-foreground">{register.lawyerCard.title}</h2>
@@ -98,12 +98,26 @@ export function RegisterPicker() {
   );
 }
 
+function readClientQuery() {
+  if (typeof window === "undefined") return { zip: "", need: "" };
+  const q = new URLSearchParams(window.location.search);
+  return { zip: q.get("zip") ?? "", need: q.get("need") ?? "" };
+}
+
 export function RegisterForm({ role }: { role: "client" | "lawyer" }) {
   const { t } = useLocale();
   const { register } = t;
   const [sent, setSent] = useState(false);
   const fields = role === "lawyer" ? register.lawyerFields : register.clientFields;
   const card = role === "lawyer" ? register.lawyerCard : register.clientCard;
+  const query = readClientQuery();
+  const needText =
+    role === "client" && query.need
+      ? register.needPrefill[query.need as keyof typeof register.needPrefill]
+      : "";
+  const casePrefill = [query.zip ? register.zipNote.replace("{zip}", query.zip) : "", needText]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div className="mx-auto max-w-2xl">
@@ -151,6 +165,7 @@ export function RegisterForm({ role }: { role: "client" | "lawyer" }) {
                       rows={4}
                       required
                       placeholder={f.ph}
+                      defaultValue={casePrefill}
                       className="mt-2 w-full rounded border border-brand-foreground/15 bg-ink px-3 py-3 text-sm text-brand-foreground outline-none transition-colors placeholder:text-brand-foreground/35 focus:border-brand"
                     />
                   ) : (

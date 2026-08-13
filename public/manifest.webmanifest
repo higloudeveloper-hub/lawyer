@@ -1,0 +1,17 @@
+{
+  "name": "D2LE2 Law",
+  "short_name": "D2LE2",
+  "description": "Marketplace legal bilingüe. Clientes gratis. Abogados pagan al desbloquear.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafbfc",
+  "theme_color": "#1c2a44",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

@@ -162,9 +162,16 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 4.75rem;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     font-synthesis: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   * {
@@ -585,6 +592,17 @@
   }
 }
 
+@keyframes sheetup {
+  from {
+    opacity: 0.6;
+    transform: translateY(18%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes truststar {
   0% {
     opacity: 0;
@@ -727,6 +745,10 @@
   animation: barquery 2.2s ease-out both;
 }
 
+@utility animate-sheetup {
+  animation: sheetup 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
 @utility animate-truststar {
   animation: truststar 0.48s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
@@ -778,6 +800,7 @@
   .animate-bellpop,
   .animate-deskflash,
   .animate-barquery,
+  .animate-sheetup,
   .animate-truststar,
   .animate-onlineflick {
     animation: none !important;
@@ -788,13 +811,27 @@
   }
 }
 
-/* Mobile polish: tighter touch targets + safe-area for sticky CTA */
+/* Native-app chrome — mobile only. Desktop styles stay untouched. */
 @media (max-width: 639px) {
   html {
-    scroll-padding-top: 4.5rem;
+    scroll-padding-top: calc(3.5rem + env(safe-area-inset-top));
   }
 
   body {
     overflow-x: hidden;
+    overscroll-behavior-y: contain;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px;
   }
 }

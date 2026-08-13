@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
-import { ArrowRight, Phone } from "lucide-react";
-import heroImage from "@/assets/hero-office.jpg";
+import { ArrowRight } from "lucide-react";
+import heroImage from "@/assets/hero-hall.jpg";
 import { useLocale } from "@/lib/locale";
 import { useLiveCount } from "@/lib/live-count";
 import { cn } from "@/lib/utils";
@@ -12,18 +12,18 @@ export function Hero() {
   const { hero } = t;
 
   return (
-    <section id="inicio" className="relative isolate min-h-[32rem] overflow-hidden bg-ink sm:min-h-[36rem] lg:min-h-[40rem]">
+    <section id="inicio" className="relative isolate min-h-[calc(100svh-7.25rem)] overflow-hidden bg-ink sm:min-h-[36rem] lg:min-h-[40rem]">
       <img
         src={heroImage}
         alt={hero.imageAlt}
         width={1408}
         height={792}
-        className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
+        className="absolute inset-0 h-full w-full object-cover object-[58%_center]"
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,oklch(0.23_0.055_255/0.92)_0%,oklch(0.23_0.055_255/0.62)_40%,oklch(0.23_0.04_255/0.18)_68%,oklch(0.23_0.04_255/0.08)_100%)]" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-[linear-gradient(180deg,transparent,oklch(0.23_0.055_255/0.4))] md:hidden" />
 
-      <div className="relative mx-auto grid max-w-7xl gap-6 px-4 pb-8 pt-12 sm:gap-10 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1.15fr)_auto] lg:items-center lg:py-28">
+      <div className="relative mx-auto grid max-w-7xl gap-6 px-4 pb-6 pt-8 sm:gap-10 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1.15fr)_auto] lg:items-center lg:py-28">
         <Reveal className="max-w-3xl">
           <p className="text-kicker text-brand-foreground/70">
             {hero.label}
@@ -43,14 +43,6 @@ export function Hero() {
           <LiveOnline clientsLabel={hero.onlineClients} prosLabel={hero.onlinePros} />
 
           <ZipSearch />
-
-          <a
-            href={t.phoneHref}
-            className="mt-3 inline-flex items-center gap-1.5 text-ui text-[0.75rem] text-brand-foreground/70 transition-colors hover:text-brand-foreground sm:hidden"
-          >
-            <Phone className="h-3.5 w-3.5" />
-            {hero.callCta}
-          </a>
 
           <div className="mt-8 hidden items-center gap-4 sm:flex">
             <TrustpilotRating score={hero.ratingScore} count={hero.ratingCount} />
@@ -183,11 +175,11 @@ function ZipSearch() {
             setZip(event.target.value.replace(/\D/g, "").slice(0, 5));
             setError(false);
           }}
-          className="min-w-0 flex-1 bg-transparent px-4 py-3.5 text-ui text-sm tracking-[0.12em] text-foreground outline-none placeholder:tracking-normal placeholder:text-muted-foreground sm:px-5 sm:py-4"
+          className="min-w-0 flex-1 bg-transparent px-4 py-3.5 text-ui text-base tracking-[0.12em] text-foreground outline-none placeholder:tracking-normal placeholder:text-muted-foreground sm:px-5 sm:py-4 sm:text-sm"
         />
         <button
           type="submit"
-          className="inline-flex shrink-0 items-center gap-1.5 bg-brand px-4 text-ui text-[0.75rem] text-brand-foreground transition-colors hover:bg-brand-dark sm:px-5"
+          className="inline-flex min-h-12 shrink-0 items-center gap-1.5 bg-brand px-4 text-ui text-[0.8rem] text-brand-foreground transition-colors hover:bg-brand-dark sm:min-h-0 sm:px-5 sm:text-[0.75rem]"
         >
           {hero.zipSearch}
           <ArrowRight className="h-3.5 w-3.5" />
@@ -196,6 +188,22 @@ function ZipSearch() {
       <p className={cn("mt-2.5 text-xs", error ? "text-red-300" : "text-brand-foreground/70")}>
         {error ? hero.zipError : hero.zipHint}
       </p>
+      <p className="mt-4 text-kicker text-brand-foreground/55">{hero.needPrompt}</p>
+      <div className="-mx-1 mt-2.5 flex gap-2 overflow-x-auto px-1 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {hero.needs.map((item) => (
+          <a
+            key={item.need}
+            href={
+              zip.length === 5
+                ? `/registro/cliente?zip=${zip}&need=${item.need}`
+                : `/registro/cliente?need=${item.need}`
+            }
+            className="shrink-0 rounded-full border border-brand-foreground/20 bg-brand-foreground/8 px-3.5 py-2 text-ui text-[0.7rem] text-brand-foreground/90 transition-colors hover:border-brand-foreground/45 hover:bg-brand-foreground/12"
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
     </form>
   );
 }

@@ -41,10 +41,10 @@ type RevealProps = {
 };
 
 const hidden = {
-  up: "translate-y-7 opacity-0",
-  left: "-translate-x-7 opacity-0",
-  right: "translate-x-7 opacity-0",
-  scale: "scale-[0.97] opacity-0",
+  up: "translate-y-5 opacity-0",
+  left: "-translate-x-5 opacity-0",
+  right: "translate-x-5 opacity-0",
+  scale: "scale-[0.98] opacity-0",
 };
 
 export function Reveal({ children, className, delay = 0, as = "div", variant = "up" }: RevealProps) {
@@ -56,7 +56,7 @@ export function Reveal({ children, className, delay = 0, as = "div", variant = "
       ref={ref as never}
       style={{ transitionDelay: `${delay}ms` }}
       className={cn(
-        "transition-[opacity,transform] duration-700 ease-out motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:opacity-100",
+        "transition-[opacity,transform] duration-[650ms] ease-out motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:opacity-100",
         inView ? "translate-x-0 translate-y-0 scale-100 opacity-100" : hidden[variant],
         className,
       )}

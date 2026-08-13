@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  BarChart3,
   Briefcase,
   CircleDollarSign,
   FileCheck2,
@@ -28,8 +27,8 @@ import { MatchLive } from "./MatchLive";
 import { PulseDesk } from "./PulseDesk";
 import { PartnerMarks } from "./PartnerMarks";
 
-const trustIcons = [ShieldCheck, UserRoundCheck, LaptopMinimal, MessagesSquare, CircleDollarSign];
-const benefitIcons = [UserRound, MessageCircle, ShieldCheck, BarChart3];
+const trustIcons = [CircleDollarSign, Lock, UserRoundCheck, MessagesSquare, ShieldCheck];
+const benefitIcons = [CircleDollarSign, Lock, ShieldCheck, Handshake];
 const clientAudienceIcons = [MessageCircle, Handshake, CircleDollarSign, ShieldCheck];
 const lawyerAudienceIcons = [LaptopMinimal, Scale, Wallet, Lock];
 const panelIcons = [LaptopMinimal, FileCheck2, Handshake];
@@ -101,6 +100,43 @@ export function TrustStrip() {
   );
 }
 
+export function ClientNeed() {
+  const { t } = useLocale();
+  const { need } = t;
+
+  return (
+    <section id={need.id} className="bg-background py-12 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <Reveal className="max-w-2xl">
+          <p className="text-kicker text-brand">{need.label}</p>
+          <h2 className="mt-2 text-display text-[1.75rem] leading-tight text-foreground sm:text-4xl">
+            {need.title}
+          </h2>
+          <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground sm:mt-4">{need.text}</p>
+        </Reveal>
+        <ul className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-5">
+          {need.items.map((item, i) => (
+            <Reveal as="li" key={item.need} delay={i * 90}>
+              <a
+                href={`/registro/cliente?need=${item.need}`}
+                className="group flex h-full flex-col justify-between rounded border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-panel sm:p-7"
+              >
+                <div>
+                  <h3 className="text-display text-lg leading-snug text-foreground sm:text-xl">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                </div>
+                <span className="mt-5 text-ui text-xs text-brand transition-transform duration-300 group-hover:translate-x-1">
+                  {need.cta} →
+                </span>
+              </a>
+            </Reveal>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 export function AudiencePaths() {
   const { t } = useLocale();
   const { audience } = t;
@@ -108,23 +144,23 @@ export function AudiencePaths() {
   return (
     <section id={audience.id} className="bg-surface py-12 sm:py-16 lg:py-20">
       <div className="mx-auto grid max-w-7xl gap-5 px-4 sm:gap-8 sm:px-6 lg:grid-cols-2">
-        <Reveal className="rounded border border-border bg-card p-5 transition-transform duration-300 hover:-translate-y-1 sm:p-8">
+        <Reveal variant="left" className="rounded border border-brand/30 bg-ink p-5 transition-transform duration-300 hover:-translate-y-1 sm:p-8">
           <p className="text-kicker text-brand">
             {audience.clientLabel}
           </p>
-          <h2 className="mt-2 text-display text-[1.65rem] leading-tight text-foreground sm:mt-3 sm:text-3xl">
+          <h2 className="mt-2 text-display text-[1.65rem] leading-tight text-brand-foreground sm:mt-3 sm:text-3xl">
             {audience.clientTitle}
           </h2>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:mt-4">{audience.clientSub}</p>
+          <p className="mt-3 text-sm leading-relaxed text-brand-foreground/80 sm:mt-4">{audience.clientSub}</p>
           <ul className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2">
             {audience.clientCards.map((card, i) => {
               const Icon = clientAudienceIcons[i] ?? UserRound;
               return (
                 <li key={card.title} className="flex gap-3">
-                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-foreground" strokeWidth={1.5} />
+                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-brand" strokeWidth={1.5} />
                   <div>
-                    <h3 className="text-display text-sm text-brand">{card.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{card.text}</p>
+                    <h3 className="text-display text-sm text-brand-foreground">{card.title}</h3>
+                    <p className="mt-1 text-sm text-brand-foreground/75">{card.text}</p>
                   </div>
                 </li>
               );
@@ -138,23 +174,23 @@ export function AudiencePaths() {
           </a>
         </Reveal>
 
-        <Reveal delay={120} className="rounded border border-brand/30 bg-ink p-5 transition-transform duration-300 hover:-translate-y-1 sm:p-8">
+        <Reveal variant="right" delay={140} className="rounded border border-border bg-card p-5 transition-transform duration-300 hover:-translate-y-1 sm:p-8">
           <p className="text-kicker text-brand">
             {audience.lawyerLabel}
           </p>
-          <h2 className="mt-2 text-display text-[1.65rem] leading-tight text-brand-foreground sm:mt-3 sm:text-3xl">
+          <h2 className="mt-2 text-display text-[1.65rem] leading-tight text-foreground sm:mt-3 sm:text-3xl">
             {audience.lawyerTitle}
           </h2>
-          <p className="mt-3 text-sm leading-relaxed text-brand-foreground/80 sm:mt-4">{audience.lawyerSub}</p>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:mt-4">{audience.lawyerSub}</p>
           <ul className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2">
             {audience.lawyerCards.map((card, i) => {
               const Icon = lawyerAudienceIcons[i] ?? Scale;
               return (
                 <li key={card.title} className="flex gap-3">
-                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-brand" strokeWidth={1.5} />
+                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-foreground" strokeWidth={1.5} />
                   <div>
-                    <h3 className="text-display text-sm text-brand-foreground">{card.title}</h3>
-                    <p className="mt-1 text-sm text-brand-foreground/75">{card.text}</p>
+                    <h3 className="text-display text-sm text-brand">{card.title}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{card.text}</p>
                   </div>
                 </li>
               );
@@ -162,7 +198,7 @@ export function AudiencePaths() {
           </ul>
           <a
             href="/registro/abogado"
-            className="mt-6 inline-flex w-full items-center justify-center rounded border border-brand-foreground/25 px-6 py-3.5 text-ui text-xs text-brand-foreground transition-colors hover:bg-brand-foreground/10 sm:mt-8 sm:w-auto"
+            className="mt-6 inline-flex w-full items-center justify-center rounded border border-foreground/20 px-6 py-3.5 text-ui text-xs text-foreground transition-colors hover:bg-accent sm:mt-8 sm:w-auto"
           >
             {audience.lawyerCta}
           </a>
@@ -219,7 +255,25 @@ export function HowItWorks() {
   const { t } = useLocale();
   const { how } = t;
   const [tab, setTab] = useState<"client" | "lawyer">("client");
+  const [lineOn, setLineOn] = useState(false);
+  const stepsRef = useRef<HTMLOListElement | null>(null);
   const steps = tab === "client" ? how.clientSteps : how.lawyerSteps;
+
+  useEffect(() => {
+    const el = stepsRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setLineOn(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.28 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <section id="como-funciona" className="bg-ink py-12 sm:py-16 lg:py-24">
@@ -256,12 +310,24 @@ export function HowItWorks() {
           </button>
         </div>
 
-        <ol className="mt-8 grid gap-4 sm:mt-12 sm:gap-6 md:grid-cols-3">
+        <ol ref={stepsRef} className="relative mt-8 grid gap-4 sm:mt-12 sm:gap-6 md:grid-cols-3">
+          <span
+            aria-hidden
+            className="pointer-events-none absolute top-[2.35rem] right-[16%] left-[16%] hidden h-px overflow-hidden md:block"
+          >
+            <span
+              className={cn(
+                "block h-full origin-left bg-brand/35 transition-transform duration-1000 ease-out",
+                lineOn ? "scale-x-100" : "scale-x-0",
+              )}
+            />
+          </span>
           {steps.map((s, i) => (
             <Reveal
               as="li"
               key={`${tab}-${s.n}`}
-              delay={i * 130}
+              delay={i * 140}
+              variant={i === 0 ? "left" : i === 2 ? "right" : "up"}
               className="relative rounded-lg bg-card p-5 shadow-panel transition-transform duration-300 hover:-translate-y-1 sm:p-7"
             >
               <span className="text-display text-4xl text-brand">
@@ -412,7 +478,7 @@ export function Resources() {
           {resources.items.map((r, i) => (
             <Reveal key={r.title} delay={i * 120} className="w-[78%] shrink-0 sm:w-auto">
               <a
-                href="#contacto"
+                href="/registro/cliente"
                 className="group flex h-full flex-col justify-between rounded border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-panel sm:p-7"
               >
                 <span className="text-kicker text-brand">{r.tag}</span>
@@ -450,7 +516,7 @@ export function PracticeAreas() {
             return (
               <Reveal as="li" key={item.title} delay={i * 70}>
                 <a
-                  href="/registro/cliente"
+                  href={`/registro/cliente?need=${item.need}`}
                   className="flex h-full flex-col items-start rounded border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-panel sm:p-5"
                 >
                   <Icon className="h-5 w-5 text-brand" strokeWidth={1.5} />
