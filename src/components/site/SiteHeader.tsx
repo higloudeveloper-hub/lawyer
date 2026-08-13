@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { ArrowRight, Menu, Phone, Scale, Users, X } from "lucide-react";
 import { useLocale } from "@/lib/locale";
 import { useActiveSection } from "@/lib/use-active-section";
+import { useLiveCount } from "@/lib/live-count";
 import { Logo } from "./Logo";
 import { cn } from "@/lib/utils";
 
 const primaryHrefs = ["#como-funciona", "#verificacion", "#abogados", "#precios", "#contacto"];
-const mobileHrefs = ["#inicio", "#como-funciona", "#abogados", "#precios", "#contacto"];
+const mobileHrefs = ["#como-funciona", "#abogados", "#precios", "#contacto"];
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -16,7 +17,6 @@ export function SiteHeader() {
   const { locale, setLocale, t } = useLocale();
   const { header } = t;
   const primary = header.nav.filter((item) => primaryHrefs.includes(item.href));
-  const mobileNav = header.nav.filter((item) => mobileHrefs.includes(item.href));
 
   useEffect(() => {
     let raf = 0;
@@ -134,76 +134,167 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-border bg-background max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:top-[calc(env(safe-area-inset-top)+3.5rem)] max-sm:z-40 max-sm:overflow-y-auto max-sm:border-0 max-sm:bg-background/96 max-sm:backdrop-blur-xl lg:hidden">
-          <nav className="mx-auto flex max-w-7xl flex-col px-4 py-2 pb-[calc(5.25rem+env(safe-area-inset-bottom))] sm:px-6 sm:pb-4">
-            {mobileNav.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className={cn(
-                  "border-b border-border/70 py-4 text-ui text-base transition-colors sm:hidden",
-                  active === item.href ? "text-foreground" : "text-foreground/80 hover:text-foreground",
-                )}
-              >
-                {item.label}
-              </a>
-            ))}
-            {header.nav.map((item) => (
-              <a
-                key={`full-${item.label}`}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className={cn(
-                  "hidden border-b border-border/70 py-3.5 text-ui text-sm transition-colors sm:block",
-                  active === item.href ? "text-foreground" : "text-foreground/80 hover:text-foreground",
-                )}
-              >
-                {item.label}
-              </a>
-            ))}
-            <div className="flex items-center gap-3 py-4 sm:hidden">
-              <button
-                type="button"
-                onClick={() => setLocale("es")}
-                className={cn(
-                  "min-h-11 px-2 text-ui text-sm",
-                  locale === "es" ? "text-foreground" : "text-muted-foreground",
-                )}
-              >
-                {header.langEs}
-              </button>
-              <span className="text-border">/</span>
-              <button
-                type="button"
-                onClick={() => setLocale("en")}
-                className={cn(
-                  "min-h-11 px-2 text-ui text-sm",
-                  locale === "en" ? "text-foreground" : "text-muted-foreground",
-                )}
-              >
-                {header.langEn}
-              </button>
-            </div>
-            <div className="flex flex-col gap-2 pb-4 sm:pt-2">
-              <a
-                href="/registro/abogado"
-                onClick={() => setOpen(false)}
-                className="py-3 text-center text-ui text-xs text-muted-foreground max-sm:min-h-11 max-sm:text-sm"
-              >
-                {header.ctaLawyer}
-              </a>
-              <a
-                href="/registro/cliente"
-                onClick={() => setOpen(false)}
-                className="rounded bg-brand px-5 py-3 text-center text-ui text-xs text-brand-foreground max-sm:rounded-full max-sm:text-sm"
-              >
-                {header.ctaClient}
-              </a>
-            </div>
-          </nav>
-        </div>
+        <>
+          <MobileMenu onClose={() => setOpen(false)} />
+          <div className="hidden border-t border-border bg-background sm:block lg:hidden">
+            <nav className="mx-auto flex max-w-7xl flex-col px-6 pb-4">
+              {header.nav.map((item) => (
+                <a
+                  key={`full-${item.label}`}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "border-b border-border/70 py-3.5 text-ui text-sm transition-colors",
+                    active === item.href ? "text-foreground" : "text-foreground/80 hover:text-foreground",
+                  )}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <div className="flex flex-col gap-2 pt-2">
+                <a
+                  href="/registro/abogado"
+                  onClick={() => setOpen(false)}
+                  className="py-3 text-center text-ui text-xs text-muted-foreground"
+                >
+                  {header.ctaLawyer}
+                </a>
+                <a
+                  href="/registro/cliente"
+                  onClick={() => setOpen(false)}
+                  className="rounded bg-brand px-5 py-3 text-center text-ui text-xs text-brand-foreground"
+                >
+                  {header.ctaClient}
+                </a>
+              </div>
+            </nav>
+          </div>
+        </>
       )}
     </header>
+  );
+}
+
+function MobileMenu({ onClose }: { onClose: () => void }) {
+  const lawyers = useLiveCount("lawyers");
+  const { locale, setLocale, t } = useLocale();
+  const { header, audience, app, hero, chat } = t;
+  const links = header.nav.filter((item) => mobileHrefs.includes(item.href));
+
+  return (
+    <div className="animate-sheetup fixed inset-x-0 bottom-0 top-[calc(env(safe-area-inset-top)+3.5rem)] z-40 overflow-y-auto bg-background sm:hidden">
+      <div className="flex min-h-full flex-col px-4 pb-[calc(5.75rem+env(safe-area-inset-bottom))] pt-5">
+        <div className="flex items-center justify-between gap-3">
+          <div className="inline-flex rounded-full bg-muted p-1" role="group" aria-label="Language">
+            <button
+              type="button"
+              onClick={() => setLocale("es")}
+              className={cn(
+                "rounded-full px-3.5 py-1.5 text-ui text-[0.72rem]",
+                locale === "es" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground",
+              )}
+            >
+              {header.langEs}
+            </button>
+            <button
+              type="button"
+              onClick={() => setLocale("en")}
+              className={cn(
+                "rounded-full px-3.5 py-1.5 text-ui text-[0.72rem]",
+                locale === "en" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground",
+              )}
+            >
+              {header.langEn}
+            </button>
+          </div>
+          <p className="flex items-center gap-1.5 text-[0.68rem] text-muted-foreground">
+            <span className="relative grid h-1.5 w-1.5 place-items-center">
+              <span className="absolute inset-0 rounded-full bg-emerald-400/70 animate-livepulse" />
+              <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            </span>
+            <span key={lawyers} className="animate-onlineflick tabular-nums text-foreground">
+              {lawyers.toLocaleString("en-US")}
+            </span>
+            {chat.availableNow}
+          </p>
+        </div>
+
+        <p className="mt-6 text-kicker text-brand">{header.speakLang}</p>
+        <h2 className="mt-1 text-display text-[1.7rem] leading-tight text-foreground">{header.menuPick}</h2>
+
+        <div className="mt-5 grid gap-3">
+          <a
+            href="/registro/cliente"
+            onClick={onClose}
+            className="relative overflow-hidden rounded-3xl bg-ink px-5 py-5 text-brand-foreground shadow-panel"
+          >
+            <span className="inline-flex rounded-full bg-brand px-2.5 py-0.5 text-[0.6rem] font-semibold tracking-wide">
+              {app.free}
+            </span>
+            <span className="mt-3 flex items-end justify-between gap-3">
+              <span>
+                <span className="flex items-center gap-2 text-display text-[1.55rem] leading-none">
+                  <Users className="h-5 w-5 text-brand" strokeWidth={1.6} />
+                  {header.ctaClient}
+                </span>
+                <span className="mt-2 block text-sm leading-snug text-brand-foreground/70">
+                  {audience.clientTitle}
+                </span>
+              </span>
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-brand text-brand-foreground">
+                <ArrowRight className="h-5 w-5" />
+              </span>
+            </span>
+          </a>
+
+          <a
+            href="/registro/abogado"
+            onClick={onClose}
+            className="rounded-3xl bg-card px-5 py-5 ring-1 ring-border"
+          >
+            <span className="text-kicker text-muted-foreground">{audience.lawyerLabel}</span>
+            <span className="mt-3 flex items-end justify-between gap-3">
+              <span>
+                <span className="flex items-center gap-2 text-display text-[1.55rem] leading-none text-foreground">
+                  <Scale className="h-5 w-5 text-brand" strokeWidth={1.6} />
+                  {header.ctaLawyer}
+                </span>
+                <span className="mt-2 block text-sm leading-snug text-muted-foreground">
+                  {audience.lawyerTitle}
+                </span>
+              </span>
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent text-brand">
+                <ArrowRight className="h-5 w-5" />
+              </span>
+            </span>
+          </a>
+        </div>
+
+        <nav className="mt-7">
+          {links.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={onClose}
+              className="flex items-center justify-between border-b border-border/70 py-3.5 text-ui text-[0.95rem] text-foreground"
+            >
+              {item.label}
+              <ArrowRight className="h-4 w-4 text-muted-foreground" />
+            </a>
+          ))}
+          <a
+            href={t.phoneHref}
+            onClick={onClose}
+            className="flex items-center justify-between py-3.5 text-ui text-[0.95rem] text-foreground"
+          >
+            <span className="flex items-center gap-2">
+              <Phone className="h-4 w-4 text-brand" strokeWidth={1.75} />
+              {hero.callCta}
+            </span>
+            <span className="text-[0.7rem] text-muted-foreground">{header.phoneSub}</span>
+          </a>
+        </nav>
+      </div>
+    </div>
   );
 }
