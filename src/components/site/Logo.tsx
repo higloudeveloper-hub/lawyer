@@ -3,11 +3,13 @@ export function Logo({
   href = "/",
   onDark = false,
   compact = false,
+  subtitle,
 }: {
   className?: string;
   href?: string;
   onDark?: boolean;
   compact?: boolean;
+  subtitle?: string;
 }) {
   return (
     <a
@@ -38,7 +40,7 @@ export function Logo({
         </span>
         {!compact && (
           <span className={`mt-0.5 block truncate text-kicker ${onDark ? "text-brand-foreground/70" : "text-brand"}`}>
-            Marketplace legal
+            {subtitle ?? "Marketplace legal"}
           </span>
         )}
       </span>

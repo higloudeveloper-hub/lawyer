@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MessageSquare, Paperclip, Phone, Send, X } from "lucide-react";
+import { ArrowRight, MessageSquare, Paperclip, Send, Sparkles, X } from "lucide-react";
 import { useLocale } from "@/lib/locale";
 import { useLiveCount } from "@/lib/live-count";
 
@@ -8,7 +8,7 @@ export function StickyMobileCta() {
   const [chatOpen, setChatOpen] = useState(false);
   const lawyers = useLiveCount("lawyers");
   const { t } = useLocale();
-  const { chat, header, hero } = t;
+  const { chat } = t;
 
   useEffect(() => {
     if (!chatOpen) return;
@@ -112,49 +112,25 @@ export function StickyMobileCta() {
         </div>
       )}
 
-      <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-border/80 bg-background/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl">
-        {!chatOpen && (
-          <div className="flex items-center justify-center gap-2 border-b border-border/70 px-3 py-1.5">
-            <span className="relative grid h-1.5 w-1.5 place-items-center">
-              <span className="absolute inset-0 rounded-full bg-emerald-400/70 animate-livepulse" />
-              <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            </span>
-            <span key={lawyers} className="animate-onlineflick text-ui text-[0.7rem] tabular-nums text-foreground">
-              {lawyers.toLocaleString("en-US")}
-            </span>
-            <span className="text-[0.65rem] font-semibold tracking-wide text-muted-foreground">
-              {chat.availableNow}
-            </span>
-          </div>
-        )}
-        <div className="grid h-[3.85rem] grid-cols-3 items-center px-2">
+      <nav className="fixed inset-x-0 bottom-0 z-50 bg-brand pb-[env(safe-area-inset-bottom)]">
+        <div className="flex items-center px-2 py-2">
           <button
             type="button"
             onClick={() => setChatOpen((v) => !v)}
             aria-label={`${lawyers} ${chat.lawyersOnline}`}
-            className="flex flex-col items-center gap-0.5 text-muted-foreground"
+            className="grid h-11 w-11 shrink-0 place-items-center text-brand-foreground/80"
           >
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-brand/12 text-brand">
-              <MessageSquare className="h-5 w-5" strokeWidth={1.75} />
-            </span>
-            <span className="text-ui text-[0.62rem]">{header.dockChat}</span>
+            <MessageSquare className="h-5 w-5" strokeWidth={1.75} />
           </button>
-
-          <a
-            href="/registro/cliente"
-            className="mx-1 flex h-11 items-center justify-center rounded-full bg-brand px-3 text-ui text-[0.8rem] text-brand-foreground active:bg-brand-dark"
-          >
-            {header.ctaClient}
+          <a href="/registro" className="flex min-w-0 flex-1 flex-col items-center py-1 text-brand-foreground">
+            <span className="flex items-center gap-1.5 text-ui text-[0.95rem]">
+              <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+              {t.app.start}
+              <ArrowRight className="h-4 w-4" />
+            </span>
+            <span className="mt-0.5 text-[0.62rem] text-brand-foreground/75">{t.app.startHint}</span>
           </a>
-
-          <a
-            href={t.phoneHref}
-            aria-label={hero.callCta}
-            className="flex flex-col items-center gap-0.5 text-muted-foreground"
-          >
-            <Phone className="h-5 w-5" strokeWidth={1.75} />
-            <span className="text-ui text-[0.62rem]">{header.dockCall}</span>
-          </a>
+          <span className="w-11 shrink-0" />
         </div>
       </nav>
     </div>

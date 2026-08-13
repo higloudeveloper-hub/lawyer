@@ -814,7 +814,7 @@
 /* Native-app chrome — mobile only. Desktop styles stay untouched. */
 @media (max-width: 639px) {
   html {
-    scroll-padding-top: calc(3.5rem + env(safe-area-inset-top));
+    scroll-padding-top: calc(5.75rem + env(safe-area-inset-top));
     overflow-x: hidden;
     overscroll-behavior: none;
     max-width: 100%;

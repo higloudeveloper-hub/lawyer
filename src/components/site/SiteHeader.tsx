@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, Menu, Phone, Scale, Users, X } from "lucide-react";
+import { ArrowRight, Globe, Menu, Phone, Scale, Shield, Users, X, Zap } from "lucide-react";
 import { useLocale } from "@/lib/locale";
 import { useActiveSection } from "@/lib/use-active-section";
 import { useLiveCount } from "@/lib/live-count";
@@ -15,7 +15,8 @@ export function SiteHeader() {
   const [progress, setProgress] = useState(0);
   const active = useActiveSection(primaryHrefs);
   const { locale, setLocale, t } = useLocale();
-  const { header } = t;
+  const { header, app } = t;
+  const tickerIcons = [Zap, Shield, Globe];
   const primary = header.nav.filter((item) => primaryHrefs.includes(item.href));
 
   useEffect(() => {
@@ -56,11 +57,33 @@ export function SiteHeader() {
     >
       <div
         aria-hidden
-        className="absolute inset-x-0 bottom-0 z-10 h-[2px] origin-left bg-brand"
+        className="absolute inset-x-0 bottom-0 z-10 hidden h-[2px] origin-left bg-brand sm:block"
         style={{ transform: `scaleX(${progress})` }}
       />
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-6 px-4 sm:h-16 sm:px-6">
-        <Logo compact className="min-w-0" />
+      <div className="flex items-center justify-between gap-2 bg-ink px-3 py-1.5 sm:hidden">
+        {app.ticker.map((item, i) => {
+          const Icon = tickerIcons[i] ?? Zap;
+          return (
+            <p key={item} className="flex min-w-0 items-center gap-1 text-[0.52rem] font-semibold uppercase tracking-wide text-brand-foreground/90">
+              <Icon className="h-2.5 w-2.5 shrink-0 text-brand" strokeWidth={2} />
+              <span className="truncate">{item}</span>
+            </p>
+          );
+        })}
+      </div>
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-3 sm:px-6">
+        <Logo compact className="hidden min-w-0 sm:flex" />
+        <Logo subtitle={app.tagline} className="min-w-0 sm:hidden" />
+        <a
+          href={t.phoneHref}
+          className="ml-auto hidden shrink-0 items-center gap-1.5 rounded-full bg-card px-2.5 py-1.5 shadow-sm ring-1 ring-border max-sm:flex"
+        >
+          <Phone className="h-3.5 w-3.5 text-brand" strokeWidth={1.75} />
+          <span>
+            <span className="block text-[0.62rem] font-semibold leading-none text-foreground">{t.phone}</span>
+            <span className="mt-0.5 block text-[0.5rem] leading-none text-muted-foreground">{header.phoneSub}</span>
+          </span>
+        </a>
 
         <nav className="hidden items-center gap-8 lg:flex">
           {primary.map((item) => (
@@ -182,7 +205,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
   const links = header.nav.filter((item) => mobileHrefs.includes(item.href));
 
   return (
-    <div className="animate-sheetup fixed inset-x-0 bottom-0 top-[calc(env(safe-area-inset-top)+3.5rem)] z-40 overflow-y-auto bg-background sm:hidden">
+    <div className="animate-sheetup fixed inset-x-0 bottom-0 top-[calc(env(safe-area-inset-top)+5.75rem)] z-40 overflow-y-auto bg-background sm:hidden">
       <div className="flex min-h-full flex-col px-4 pb-[calc(5.75rem+env(safe-area-inset-bottom))] pt-5">
         <div className="flex items-center justify-between gap-3">
           <div className="inline-flex rounded-full bg-muted p-1" role="group" aria-label="Language">
