@@ -77,7 +77,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      {
+        name: "viewport",
+        content:
+          "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, shrink-to-fit=no",
+      },
       { name: "theme-color", content: "#1c2a44" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "mobile-web-app-capable", content: "yes" },
@@ -134,12 +138,36 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function MobileViewportLock() {
+  useEffect(() => {
+    const isPhone = () => window.matchMedia("(max-width: 639px)").matches;
+    const blockPinch = (event: TouchEvent) => {
+      if (isPhone() && event.touches.length > 1) event.preventDefault();
+    };
+    const blockGesture = (event: Event) => {
+      if (isPhone()) event.preventDefault();
+    };
+    document.addEventListener("touchmove", blockPinch, { passive: false });
+    document.addEventListener("gesturestart", blockGesture);
+    document.addEventListener("gesturechange", blockGesture);
+    document.addEventListener("gestureend", blockGesture);
+    return () => {
+      document.removeEventListener("touchmove", blockPinch);
+      document.removeEventListener("gesturestart", blockGesture);
+      document.removeEventListener("gesturechange", blockGesture);
+      document.removeEventListener("gestureend", blockGesture);
+    };
+  }, []);
+  return null;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       <LocaleProvider>
+        <MobileViewportLock />
         <Outlet />
       </LocaleProvider>
     </QueryClientProvider>

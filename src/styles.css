@@ -815,12 +815,26 @@
 @media (max-width: 639px) {
   html {
     scroll-padding-top: calc(3.5rem + env(safe-area-inset-top));
+    overflow-x: hidden;
+    overscroll-behavior: none;
+    max-width: 100%;
+    touch-action: pan-y;
   }
 
   body {
     overflow-x: hidden;
-    overscroll-behavior-y: contain;
+    overscroll-behavior: none;
+    max-width: 100%;
+    touch-action: pan-y;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  img,
+  svg,
+  video {
+    max-width: 100%;
   }
 
   a,

@@ -41,7 +41,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background scroll-smooth pb-[calc(5.75rem+env(safe-area-inset-bottom))] sm:pb-0">
+    <div className="min-h-screen bg-background scroll-smooth pb-[calc(5.75rem+env(safe-area-inset-bottom))] max-sm:overflow-x-hidden sm:pb-0">
       <SiteHeader />
       <main>
         <MobileHome />

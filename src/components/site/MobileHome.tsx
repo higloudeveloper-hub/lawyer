@@ -44,7 +44,7 @@ export function MobileHome() {
   };
 
   return (
-    <div className="sm:hidden">
+    <div className="overflow-x-hidden sm:hidden">
       <section id="inicio" className="relative isolate h-40 overflow-hidden bg-ink">
         <img
           src={heroImage}
