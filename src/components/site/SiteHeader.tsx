@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useLocale } from "@/lib/locale";
 import { useActiveSection } from "@/lib/use-active-section";
@@ -6,17 +6,17 @@ import { Logo } from "./Logo";
 import { cn } from "@/lib/utils";
 
 const primaryHrefs = ["#como-funciona", "#verificacion", "#abogados", "#precios", "#contacto"];
+const mobileHrefs = ["#inicio", "#como-funciona", "#abogados", "#precios", "#contacto"];
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [progress, setProgress] = useState(0);
-  const lastY = useRef(0);
   const active = useActiveSection(primaryHrefs);
   const { locale, setLocale, t } = useLocale();
   const { header } = t;
   const primary = header.nav.filter((item) => primaryHrefs.includes(item.href));
+  const mobileNav = header.nav.filter((item) => mobileHrefs.includes(item.href));
 
   useEffect(() => {
     let raf = 0;
@@ -28,15 +28,6 @@ export function SiteHeader() {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         setScrolled(y > 12);
         setProgress(max > 0 ? Math.min(1, y / max) : 0);
-        if (window.innerWidth < 640) {
-          const goingDown = y > lastY.current + 6;
-          const goingUp = y < lastY.current - 4;
-          if (goingDown && y > 64) setHidden(true);
-          if (goingUp || y < 48) setHidden(false);
-        } else {
-          setHidden(false);
-        }
-        lastY.current = y;
       });
     };
     onScroll();
@@ -59,9 +50,8 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 border-b bg-background/80 pt-[env(safe-area-inset-top)] backdrop-blur-md transition-[border-color,box-shadow,transform] duration-300",
+        "sticky top-0 z-40 border-b bg-background/80 pt-[env(safe-area-inset-top)] backdrop-blur-md transition-[border-color,box-shadow] duration-300",
         scrolled ? "border-border shadow-[0_8px_24px_-18px_oklch(0.22_0.04_255/0.35)]" : "border-border/60",
-        hidden && !open && "max-sm:-translate-y-full",
       )}
     >
       <div
@@ -146,13 +136,26 @@ export function SiteHeader() {
       {open && (
         <div className="border-t border-border bg-background max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:top-[calc(env(safe-area-inset-top)+3.5rem)] max-sm:z-40 max-sm:overflow-y-auto max-sm:border-0 max-sm:bg-background/96 max-sm:backdrop-blur-xl lg:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col px-4 py-2 pb-[calc(5.25rem+env(safe-area-inset-bottom))] sm:px-6 sm:pb-4">
-            {header.nav.map((item) => (
+            {mobileNav.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "border-b border-border/70 py-3.5 text-ui text-sm transition-colors max-sm:py-4 max-sm:text-base",
+                  "border-b border-border/70 py-4 text-ui text-base transition-colors sm:hidden",
+                  active === item.href ? "text-foreground" : "text-foreground/80 hover:text-foreground",
+                )}
+              >
+                {item.label}
+              </a>
+            ))}
+            {header.nav.map((item) => (
+              <a
+                key={`full-${item.label}`}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className={cn(
+                  "hidden border-b border-border/70 py-3.5 text-ui text-sm transition-colors sm:block",
                   active === item.href ? "text-foreground" : "text-foreground/80 hover:text-foreground",
                 )}
               >

@@ -464,6 +464,8 @@ export const content = {
     live: {
       label: "En tiempo real",
       title: "Casos que necesitan ayuda ahora",
+      text: "Así se ve el listado. El asunto sí. El nombre y el teléfono, no.",
+      hidden: "Contacto reservado",
       cta: "Publicar mi caso gratis",
       items: [
         { title: "Residencia — consulta inicial", area: "Inmigración", loc: "Miami, FL", time: "Hace 2 min" },
@@ -751,6 +753,7 @@ export const content = {
     chat: {
       online: "En línea",
       lawyersOnline: "abogados en línea",
+      availableNow: "Available now",
       minimize: "Minimizar chat",
       open: "Abrir chat",
       close: "Cerrar chat",
@@ -1241,6 +1244,8 @@ export const content = {
     live: {
       label: "Live now",
       title: "Cases that need help now",
+      text: "This is the list. The matter shows. Name and phone do not.",
+      hidden: "Contact reserved",
       cta: "Post my case for free",
       items: [
         { title: "Residency — first consult", area: "Immigration", loc: "Miami, FL", time: "2 min ago" },
@@ -1528,6 +1533,7 @@ export const content = {
     chat: {
       online: "Online",
       lawyersOnline: "lawyers online",
+      availableNow: "Available now",
       minimize: "Minimize chat",
       open: "Open chat",
       close: "Close chat",

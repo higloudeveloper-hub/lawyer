@@ -33,7 +33,7 @@ export function TopLawyers() {
 
         <ul className="mt-10 grid gap-px bg-border sm:mt-14 sm:grid-cols-2 lg:grid-cols-4">
           {lawyers.items.map((lawyer, i) => (
-            <Reveal as="li" key={lawyer.name} delay={i * 90} className="bg-background">
+            <Reveal as="li" key={lawyer.name} delay={i * 90} className={i > 1 ? "hidden bg-background sm:block" : "bg-background"}>
               <a href="/registro/cliente" className="group block h-full">
                 <div className="overflow-hidden">
                   <img

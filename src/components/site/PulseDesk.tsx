@@ -11,11 +11,11 @@ const photos = [photo1, photo2];
 type Phase = "idle" | "type" | "send" | "ping" | "rest";
 
 const PHASE_MS: Record<Phase, number> = {
-  idle: 280,
-  type: 1300,
-  send: 480,
-  ping: 1650,
-  rest: 2400,
+  idle: 500,
+  type: 1700,
+  send: 720,
+  ping: 1500,
+  rest: 2200,
 };
 
 function useInView<T extends HTMLElement>() {
@@ -157,7 +157,7 @@ export function PulseDesk() {
   const toast = !reduced && phase === "ping" ? person : null;
 
   return (
-    <section id={pulse.id} className="bg-background py-12 sm:py-16 lg:py-24">
+    <section id={pulse.id} className="hidden bg-background py-12 sm:block sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
@@ -177,7 +177,15 @@ export function PulseDesk() {
           </button>
         </Reveal>
 
-        <div ref={ref} className="mt-8 grid items-stretch gap-4 sm:mt-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-5">
+        <div ref={ref} className="relative mt-8 grid items-stretch gap-4 sm:mt-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-5">
+          {phase === "send" && (
+            <span
+              aria-hidden
+              className="animate-paperin pointer-events-none absolute top-[42%] left-[28%] z-10 hidden rounded border border-brand/30 bg-card px-3 py-2 text-xs text-foreground shadow-panel lg:block"
+            >
+              {person.title}
+            </span>
+          )}
           <ClientDesk
             pulse={pulse}
             person={person}
@@ -272,8 +280,8 @@ function ClientDesk({
 
           <div
             className={cn(
-              "mt-4 inline-flex items-center gap-1.5 rounded px-3 py-2 text-ui text-[0.7rem] text-brand-foreground transition-colors",
-              sending ? "bg-brand-dark" : "bg-brand",
+              "mt-4 inline-flex items-center gap-1.5 rounded px-3 py-2 text-ui text-[0.7rem] text-brand-foreground transition-all duration-300",
+              sending ? "scale-[0.98] bg-brand-dark" : "bg-brand",
             )}
           >
             {sending || queued.length > 0 ? <Check className="h-3.5 w-3.5" strokeWidth={2} /> : null}

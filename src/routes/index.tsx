@@ -4,6 +4,7 @@ import { Hero } from "@/components/site/Hero";
 import {
   AudiencePaths,
   Benefits,
+  CaseBoard,
   ClientNeed,
   HowItWorks,
   LiveCases,
@@ -19,7 +20,6 @@ import { ChatWidget } from "@/components/site/ChatWidget";
 import { StickyMobileCta } from "@/components/site/StickyMobileCta";
 import { TopLawyers } from "@/components/site/TopLawyers";
 import { Contact } from "@/components/site/Contact";
-import { ScrollRail } from "@/components/site/ScrollRail";
 import { content } from "@/lib/content";
 
 const meta = content.es.meta;
@@ -40,9 +40,8 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background scroll-smooth pb-[calc(4.15rem+env(safe-area-inset-bottom))] sm:pb-0">
+    <div className="min-h-screen bg-background scroll-smooth pb-[calc(5.75rem+env(safe-area-inset-bottom))] sm:pb-0">
       <SiteHeader />
-      <ScrollRail />
       <main>
         <Hero />
         <TrustStrip />
@@ -53,6 +52,7 @@ function Index() {
         <VerificationBand />
         <TopLawyers />
         <PulseBand />
+        <CaseBoard />
         <LiveCases />
         <Benefits />
         <Pricing />

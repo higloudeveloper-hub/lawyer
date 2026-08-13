@@ -261,7 +261,7 @@ export function VerifyDemo() {
           : verify.ui.querying;
 
   return (
-    <section id="verificacion" className="bg-surface py-12 sm:py-16 lg:py-24">
+    <section id="verificacion" className="hidden bg-surface py-12 sm:block sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">

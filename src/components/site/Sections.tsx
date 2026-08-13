@@ -70,7 +70,7 @@ export function TrustStrip() {
         >
           {trust.tagline}
         </p>
-        <ul className="grid grid-cols-5 gap-0 sm:mt-6 sm:grid sm:grid-cols-3 sm:gap-6 lg:grid-cols-5 lg:divide-x lg:divide-border">
+        <ul className="grid grid-cols-3 gap-3 sm:mt-6 sm:grid sm:grid-cols-3 sm:gap-6 lg:grid-cols-5 lg:divide-x lg:divide-border">
           {trust.items.map(({ lines }, i) => {
             const Icon = trustIcons[i] ?? ShieldCheck;
             return (
@@ -79,6 +79,7 @@ export function TrustStrip() {
                 style={{ transitionDelay: inView ? `${140 + i * 180}ms` : "0ms" }}
                 className={cn(
                   "flex flex-col items-center gap-1.5 px-0.5 text-center transition-[opacity,transform] duration-500 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 sm:flex-row sm:justify-center sm:gap-3 sm:px-2 lg:text-left",
+                  (i === 1 || i === 3) && "max-sm:hidden",
                   inView ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
                 )}
               >
@@ -86,7 +87,7 @@ export function TrustStrip() {
                   className="h-[1.15rem] w-[1.15rem] shrink-0 text-brand sm:h-6 sm:w-6"
                   strokeWidth={1.75}
                 />
-                <span className="min-w-0 text-ui text-[0.55rem] leading-snug text-foreground sm:text-xs">
+                <span className="min-w-0 text-ui text-[0.68rem] leading-snug text-foreground sm:text-xs">
                   {lines[0]}
                   <br />
                   {lines[1]}
@@ -122,7 +123,8 @@ export function ClientNeed() {
                 className="group flex h-full flex-col justify-between rounded border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-panel sm:p-7"
               >
                 <div>
-                  <h3 className="text-display text-lg leading-snug text-foreground sm:text-xl">{item.title}</h3>
+                  <span className="text-ui text-[0.65rem] tabular-nums text-brand">0{i + 1}</span>
+                  <h3 className="mt-1.5 text-display text-lg leading-snug text-foreground sm:text-xl">{item.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
                 </div>
                 <span className="mt-5 text-ui text-xs text-brand transition-transform duration-300 group-hover:translate-x-1">
@@ -142,7 +144,7 @@ export function AudiencePaths() {
   const { audience } = t;
 
   return (
-    <section id={audience.id} className="bg-surface py-12 sm:py-16 lg:py-20">
+    <section id={audience.id} className="hidden bg-surface py-12 sm:block sm:py-16 lg:py-20">
       <div className="mx-auto grid max-w-7xl gap-5 px-4 sm:gap-8 sm:px-6 lg:grid-cols-2">
         <Reveal variant="left" className="rounded border border-brand/30 bg-ink p-5 transition-transform duration-300 hover:-translate-y-1 sm:p-8">
           <p className="text-kicker text-brand">
@@ -213,7 +215,7 @@ export function Benefits() {
   const { benefits } = t;
 
   return (
-    <section id="beneficios" className="bg-background py-10 sm:py-16 lg:py-20">
+    <section id="beneficios" className="hidden bg-background py-10 sm:block sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid gap-6 sm:gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,2.4fr)]">
           <Reveal>
@@ -285,7 +287,7 @@ export function HowItWorks() {
           </h2>
         </Reveal>
 
-        <div className="mt-6 inline-flex w-full rounded bg-brand-foreground/15 p-1 sm:mt-8 sm:w-auto">
+        <div className="mt-6 hidden w-full rounded bg-brand-foreground/15 p-1 sm:mt-8 sm:inline-flex sm:w-auto">
           <button
             type="button"
             onClick={() => setTab("client")}
@@ -339,7 +341,7 @@ export function HowItWorks() {
           ))}
         </ol>
 
-        <div id="panel" className="mt-14 grid gap-6 md:grid-cols-3">
+        <div id="panel" className="mt-14 hidden gap-6 sm:grid md:grid-cols-3">
           {how.panels.map(({ t: title, d }, i) => {
             const Icon = panelIcons[i] ?? LaptopMinimal;
             return (
@@ -373,16 +375,17 @@ export function Pricing() {
             {pricing.title}
           </h2>
         </Reveal>
-        <div className="mt-8 flex gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-12 sm:grid sm:gap-6 sm:overflow-visible sm:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:grid sm:gap-6 lg:grid-cols-3">
           {pricing.plans.map((p, i) => (
             <Reveal
               key={p.name}
               delay={i * 130}
-              className={
+              className={cn(
                 p.featured
-                  ? "w-[85%] shrink-0 rounded border border-brand bg-ink p-6 shadow-brand transition-transform duration-300 hover:-translate-y-1 sm:w-auto sm:p-8"
-                  : "w-[85%] shrink-0 rounded border border-border bg-card p-6 transition-transform duration-300 hover:-translate-y-1 sm:w-auto sm:p-8"
-              }
+                  ? "rounded border border-brand bg-ink p-6 shadow-brand transition-transform duration-300 hover:-translate-y-1 sm:p-8"
+                  : "rounded border border-border bg-card p-6 transition-transform duration-300 hover:-translate-y-1 sm:p-8",
+                p.role !== "client" && "max-sm:hidden",
+              )}
             >
               <div className="flex items-center justify-between gap-3">
                 <h3
@@ -466,7 +469,7 @@ export function Resources() {
   const { resources } = t;
 
   return (
-    <section id="recursos" className="bg-surface py-12 sm:py-16 lg:py-24">
+    <section id="recursos" className="hidden bg-surface py-12 sm:block sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <p className="text-kicker text-brand">{resources.label}</p>
         <Reveal>
@@ -526,6 +529,51 @@ export function PracticeAreas() {
               </Reveal>
             );
           })}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+export function CaseBoard() {
+  const { t } = useLocale();
+  const { live } = t;
+
+  return (
+    <section id="tablero" className="bg-surface py-12 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-xl">
+            <p className="text-kicker text-brand">{live.label}</p>
+            <h2 className="mt-2 text-display text-[1.75rem] leading-tight text-foreground sm:text-4xl">
+              {live.title}
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{live.text}</p>
+          </div>
+          <a
+            href="/registro/cliente"
+            className="text-ui text-sm text-muted-foreground transition-colors hover:text-brand"
+          >
+            {live.cta} →
+          </a>
+        </Reveal>
+        <ul className="mt-8 divide-y divide-border rounded border border-border bg-card sm:mt-10">
+          {live.items.map((item, i) => (
+            <Reveal as="li" key={item.title} delay={i * 80}>
+              <a
+                href="/registro/cliente"
+                className="grid gap-1 px-4 py-4 transition-colors hover:bg-accent/40 sm:grid-cols-[1fr_auto] sm:items-center sm:px-5"
+              >
+                <div>
+                  <p className="text-sm text-foreground">{item.title}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {item.area} · {item.loc} · {live.hidden}
+                  </p>
+                </div>
+                <small className="text-xs tabular-nums text-muted-foreground">{item.time}</small>
+              </a>
+            </Reveal>
+          ))}
         </ul>
       </div>
     </section>

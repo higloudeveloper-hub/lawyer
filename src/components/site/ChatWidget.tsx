@@ -4,7 +4,7 @@ import { useLocale } from "@/lib/locale";
 import { useLiveCount } from "@/lib/live-count";
 
 export function ChatWidget() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const lawyers = useLiveCount("lawyers");
   const { t } = useLocale();
   const { chat } = t;
@@ -91,14 +91,30 @@ export function ChatWidget() {
           </form>
         </div>
       ) : (
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-label={chat.open}
-          className="grid h-14 w-14 place-items-center rounded-full bg-brand text-brand-foreground shadow-brand transition-transform hover:scale-105"
-        >
-          <MessageSquare className="h-6 w-6" />
-        </button>
+        <div className="flex items-end gap-2">
+          <span className="min-w-[7.25rem] rounded border border-border bg-card px-2.5 py-1.5 text-left shadow-panel">
+            <span className="flex items-center gap-1.5">
+              <span className="relative grid h-1.5 w-1.5 place-items-center">
+                <span className="absolute inset-0 rounded-full bg-emerald-400/70 animate-livepulse" />
+                <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              </span>
+              <span key={lawyers} className="animate-onlineflick text-ui text-sm tabular-nums leading-none text-foreground">
+                {lawyers.toLocaleString("en-US")}
+              </span>
+            </span>
+            <span className="mt-1 block text-[0.62rem] font-semibold tracking-wide text-muted-foreground">
+              {chat.availableNow}
+            </span>
+          </span>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label={`${lawyers} ${chat.lawyersOnline}`}
+            className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-brand text-brand-foreground shadow-brand animate-ctapulse transition-transform hover:scale-105"
+          >
+            <MessageSquare className="h-6 w-6" />
+          </button>
+        </div>
       )}
     </div>
   );

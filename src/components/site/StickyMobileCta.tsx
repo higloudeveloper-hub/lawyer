@@ -113,14 +113,30 @@ export function StickyMobileCta() {
       )}
 
       <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-border/80 bg-background/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl">
+        {!chatOpen && (
+          <div className="flex items-center justify-center gap-2 border-b border-border/70 px-3 py-1.5">
+            <span className="relative grid h-1.5 w-1.5 place-items-center">
+              <span className="absolute inset-0 rounded-full bg-emerald-400/70 animate-livepulse" />
+              <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            </span>
+            <span key={lawyers} className="animate-onlineflick text-ui text-[0.7rem] tabular-nums text-foreground">
+              {lawyers.toLocaleString("en-US")}
+            </span>
+            <span className="text-[0.65rem] font-semibold tracking-wide text-muted-foreground">
+              {chat.availableNow}
+            </span>
+          </div>
+        )}
         <div className="grid h-[3.85rem] grid-cols-3 items-center px-2">
           <button
             type="button"
             onClick={() => setChatOpen((v) => !v)}
-            aria-label={chat.open}
+            aria-label={`${lawyers} ${chat.lawyersOnline}`}
             className="flex flex-col items-center gap-0.5 text-muted-foreground"
           >
-            <MessageSquare className="h-5 w-5" strokeWidth={1.75} />
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-brand/12 text-brand">
+              <MessageSquare className="h-5 w-5" strokeWidth={1.75} />
+            </span>
             <span className="text-ui text-[0.62rem]">{header.dockChat}</span>
           </button>
 

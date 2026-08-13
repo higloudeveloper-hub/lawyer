@@ -12,7 +12,7 @@ export function Hero() {
   const { hero } = t;
 
   return (
-    <section id="inicio" className="relative isolate min-h-[calc(100svh-7.25rem)] overflow-hidden bg-ink sm:min-h-[36rem] lg:min-h-[40rem]">
+    <section id="inicio" className="relative isolate overflow-hidden bg-ink sm:min-h-[36rem] lg:min-h-[40rem]">
       <img
         src={heroImage}
         alt={hero.imageAlt}
@@ -40,7 +40,9 @@ export function Hero() {
             {hero.subtitle}
           </p>
 
-          <LiveOnline clientsLabel={hero.onlineClients} prosLabel={hero.onlinePros} />
+          <div className="hidden sm:block">
+            <LiveOnline clientsLabel={hero.onlineClients} prosLabel={hero.onlinePros} />
+          </div>
 
           <ZipSearch />
 
@@ -56,28 +58,13 @@ export function Hero() {
           </div>
         </Reveal>
 
-        {/* Mobile: single-row stats + Trustpilot (Harrison reference) */}
         <Reveal delay={120} className="w-full sm:hidden">
-          <div className="rounded-sm bg-ink/70 px-1 py-4 backdrop-blur-sm">
-            <div className="grid grid-cols-4 divide-x divide-brand-foreground/15">
-              {hero.stats.map((s) => (
-                <div key={s.label} className="px-1.5 text-center">
-                  <p className="text-display text-[1.05rem] leading-none text-brand">
-                    <Counter value={s.value} prefix={s.prefix} suffix={s.suffix} />
-                  </p>
-                  <p className="mt-1.5 whitespace-pre-line text-ui text-[0.58rem] leading-snug text-brand-foreground/85">
-                    {s.labelShort}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <TrustpilotRating
-              size="sm"
-              score={hero.ratingScore}
-              count={hero.ratingCount}
-              className="mt-3.5 justify-center border-t border-brand-foreground/10 pt-3"
-            />
-          </div>
+          <TrustpilotRating
+            size="sm"
+            score={hero.ratingScore}
+            count={hero.ratingCount}
+            className="justify-start"
+          />
         </Reveal>
 
         <Reveal
@@ -189,7 +176,7 @@ function ZipSearch() {
         {error ? hero.zipError : hero.zipHint}
       </p>
       <p className="mt-4 text-kicker text-brand-foreground/55">{hero.needPrompt}</p>
-      <div className="-mx-1 mt-2.5 flex gap-2 overflow-x-auto px-1 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="mt-2.5 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
         {hero.needs.map((item) => (
           <a
             key={item.need}
@@ -198,7 +185,7 @@ function ZipSearch() {
                 ? `/registro/cliente?zip=${zip}&need=${item.need}`
                 : `/registro/cliente?need=${item.need}`
             }
-            className="shrink-0 rounded-full border border-brand-foreground/20 bg-brand-foreground/8 px-3.5 py-2 text-ui text-[0.7rem] text-brand-foreground/90 transition-colors hover:border-brand-foreground/45 hover:bg-brand-foreground/12"
+            className="rounded border border-brand-foreground/20 bg-brand-foreground/8 px-3 py-2.5 text-center text-ui text-[0.75rem] text-brand-foreground/90 transition-colors hover:border-brand-foreground/45 hover:bg-brand-foreground/12 sm:rounded-full sm:px-3.5 sm:py-2 sm:text-left sm:text-[0.7rem]"
           >
             {item.label}
           </a>

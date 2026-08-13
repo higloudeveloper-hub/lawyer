@@ -120,7 +120,7 @@ type MatchCopy = ReturnType<typeof useLocale>["t"]["match"];
 
 export function MatchLive() {
   const { t } = useLocale();
-  const { match, live } = t;
+  const { match } = t;
   const { ref, inView } = useInView<HTMLElement>();
   const reduced = usePrefersReducedMotion();
   const [beat, setBeat] = useState<Beat>("idle");
@@ -210,7 +210,7 @@ export function MatchLive() {
   const titleShown = beat === "idle" ? "" : beat === "drafting" ? typedTitle : match.case.title;
 
   return (
-    <section id="casos" className="bg-surface py-12 sm:py-16 lg:py-24">
+    <section id="casos" className="hidden bg-surface py-12 sm:block sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
@@ -281,20 +281,6 @@ export function MatchLive() {
             reduced={reduced}
           />
         </div>
-
-        <ul className="mt-8 divide-y divide-border rounded border border-border bg-card sm:mt-10">
-          {live.items.map((item) => (
-            <li key={item.title} className="grid gap-1 px-4 py-3.5 sm:grid-cols-[1fr_auto] sm:items-center sm:px-5">
-              <div>
-                <p className="text-sm text-foreground">{item.title}</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">
-                  {item.area} · {item.loc}
-                </p>
-              </div>
-              <small className="text-xs text-muted-foreground">{item.time}</small>
-            </li>
-          ))}
-        </ul>
 
         <div className="mt-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p className="max-w-xl text-xs leading-relaxed text-muted-foreground">{match.note}</p>
